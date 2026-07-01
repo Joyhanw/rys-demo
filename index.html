@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -1704,6 +1705,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
   <div class="section" style="padding-top:0;">
     <div class="container">
       <div class="card-grid card-grid-3" id="casesGrid"></div>
+      <div id="casesLoadMore" style="text-align:center;margin-top:32px;"></div>
     </div>
   </div>
 </section>
@@ -1822,17 +1824,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
   <div class="container">
     <div class="footer-top">
       <!-- Quick Links Row -->
-      <div class="footer-links-row">
-        <a href="#home">首页</a>
-        <a href="#park">OPC园区</a>
-        <a href="#solution">解决方案</a>
-        <a href="#service">企业服务</a>
-        <a href="#ai-mall">AI超市</a>
-        <a href="#cases">成功案例</a>
-        <a href="#policy">政策资讯</a>
-        <a href="#cooperation">合作入驻</a>
-        <a href="#about">关于我们</a>
-      </div>
+      <div class="footer-links-row" id="footerLinksRow"></div>
 
       <!-- Three Entity Columns -->
       <div class="footer-entities">
@@ -2322,34 +2314,6 @@ const DEFAULTS = {
     { id:'pl3', title:'AI应用生成器助力企业智能化升级实践指南', summary:'介绍AI应用生成器在各行业的落地案例与最佳实践，帮助企业快速构建智能业务应用', content:'随着大模型技术的日益成熟，AI应用已经从概念走向落地。海牛AI应用生成器作为一站式AI应用构建平台，正帮助越来越多的企业实现智能化升级。\n\n一、什么是AI应用生成器\nAI应用生成器是基于大语言模型的低代码应用搭建平台。用户通过可视化拖拽和自然语言描述，即可快速创建智能客服、数据分析、文档处理等企业级AI应用，无需编写代码。\n\n二、典型应用场景\n（一）智能客服系统：某电商企业使用AI应用生成器搭建智能客服，接入商品知识库后，客服响应时间从平均5分钟缩短至15秒，客户满意度提升35%。\n\n（二）合同智能审核：某律师事务所将合同模板和审核规则导入AI应用生成器，实现合同条款的自动比对和风险标注，审核效率提升80%。\n\n（三）报表自动生成：某制造企业对接ERP系统数据，AI自动生成月度经营分析报告，管理层决策时间从一周缩短至一天。\n\n三、最佳实践建议\n建议企业从单一场景切入，先用最小可行产品验证AI应用的效果，再逐步扩展到更多业务场景。同时重视数据质量，高质量的业务数据是AI应用发挥价值的基石。', image:'https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=800&q=80', date:'2025-06-05', category:'资讯', order:3, active:true },
     { id:'pl4', title:'OPC园区与海牛达成战略合作，共建AI能力中心', summary:'双方将在AI产品、园区数字化、企业服务等领域深度合作，打造一站式智能服务平台', content:'近日，OPC园区与海牛AI正式签署战略合作协议，双方将围绕AI能力中心建设、园区数字化转型、企业智能服务等领域展开深度合作。\n\n一、合作背景\nOPC园区作为全国领先的一人公司（One Person Company）社区运营商，已在28个省份、65个城市布局426处OPC社区。海牛AI是国内领先的AI应用平台，具备AI应用生成器、智能体解决方案、AI算力服务等核心能力。\n\n二、合作内容\n（一）共建AI能力中心：在OPC园区内设立AI能力中心，向入驻企业提供AI应用生成器、智能体工作台、GPU算力等一站式AI服务。\n\n（二）园区数字化升级：利用AI技术对园区运营管理系统进行全面升级，实现企业生命周期智能管理、风险实时预警、政府考核报表自动生成。\n\n（三）企业赋能计划：面向园区企业推出AI加速包，包含AI应用搭建培训、智能体定制咨询、算力优惠等，帮助企业快速拥抱AI。\n\n三、合作愿景\n双方计划在一年内将AI能力中心覆盖至100个重点OPC园区，服务超过1万家入驻企业，打造园区+AI深度融合的行业标杆。', image:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80', date:'2025-06-01', category:'资讯', order:4, active:true }
   ],
-  parks: [
-    { id:'park1', name:'杭州未来科技城OPC园区', location:'浙江省杭州市余杭区', area:'12万m²', enterprises:'200+', icon:'\u{1F3ED}',
-      desc:'位于杭州城西科创大走廊核心区域，聚焦人工智能、大数据、云计算等前沿科技领域。园区配备完善的算力基础设施和AI能力平台，已吸引超过200家科技企业入驻。',
-      features:[
-        { icon:'\u{1F3EC}', title:'产业聚集', desc:'毗邻阿里巴巴、字节跳动、网易等头部企业，形成AI产业链上下游协同生态。园区定期举办技术沙龙、创业大赛、投融资对接会，为企业提供丰富的合作与发展机会。' },
-        { icon:'\u26A1', title:'算力中心', desc:'园区自建GPU算力集群，配备A100/H100等高性能计算资源，入驻企业可享受算力券补贴，大幅降低AI研发成本。' },
-        { icon:'\u{1F3E0}', title:'办公空间', desc:'提供共享工位、独立办公室、实验室等多种空间选择，精装修交付、拎包入驻。配备高速网络、会议室、路演厅等公共设施。' },
-        { icon:'\u{1F4B0}', title:'政策扶持', desc:'享受杭州市及余杭区两级政策叠加，涵盖租金补贴、税收优惠、人才引进奖励、研发费用加计扣除等，综合扶持力度行业领先。' },
-        { icon:'\u{1F91D}', title:'创业服务', desc:'一站式工商注册、财税代理、资质办理、法律咨询等企业服务，园区管家式运营团队全程陪伴企业成长。' },
-        { icon:'\u{1F308}', title:'生活配套', desc:'园区周边地铁5号线直达，配套人才公寓、食堂、咖啡厅、健身房、篮球场等，打造工作生活一体化的青年社区。' }
-      ]
-    },
-    { id:'park2', name:'深圳南山AI创新园', location:'广东省深圳市南山区', area:'8万m²', enterprises:'150+', icon:'\u{1F3E2}',
-      desc:'位于深圳湾科技生态圈，毗邻腾讯、百度、大疆等科技巨头。园区以AI+硬件创新为特色，聚焦智能制造、物联网、机器人等交叉领域。',
-      features:[
-        { icon:'\u{1F4F1}', title:'AI+硬件', desc:'园区配备硬件研发实验室、3D打印中心、SMT贴片产线，为AI硬件创业团队提供从原型到量产的完整支持。' },
-        { icon:'\u{1F30F}', title:'跨境出海', desc:'依托深圳跨境电商生态优势，提供海外市场拓展、多语言本地化、国际物流等一站式出海服务。' },
-        { icon:'\u{1F393}', title:'人才高地', desc:'紧邻深圳大学城，清华大学深圳国际研究生院、哈工大（深圳）等高校环绕，产学研合作紧密，AI人才供给充足。' }
-      ]
-    },
-    { id:'park3', name:'北京中关村AI加速器', location:'北京市海淀区', area:'5万m²', enterprises:'100+', icon:'\u{1F4A1}',
-      desc:'位于中关村科学城核心区，毗邻清华、北大、中科院。聚焦AI基础研究与前沿技术转化，是人工智能国家队的核心承载区。',
-      features:[
-        { icon:'\u{1F52C}', title:'科研协同', desc:'与清华、北大、中科院自动化所等建立联合实验室，入驻企业可对接顶尖AI科研资源，参与国家级课题研究。' },
-        { icon:'\u{1F3DB}', title:'资本对接', desc:'红杉、高瓴、IDG等顶级VC机构定期驻场，每月举办投融资路演，已助力50+企业完成A轮及以上融资。' }
-      ]
-    }
-  ],
   page_content: {
     park: {
       parkName:'杭州未来科技城OPC园区',
@@ -2525,7 +2489,7 @@ const DEFAULTS = {
     { id:'n4', label:'企业服务', hash:'#service', order:4, active:true },
     { id:'n5', label:'AI超市', hash:'#ai-mall', order:5, active:true },
     { id:'n6', label:'成功案例', hash:'#cases', order:6, active:true },
-    { id:'n7', label:'政策资讯', hash:'#policy', order:6, active:true },
+    { id:'n7', label:'政策资讯', hash:'#policy', order:7, active:true },
     { id:'n8', label:'合作入驻', hash:'#cooperation', order:8, active:true },
     { id:'n9', label:'关于我们', hash:'#about', order:9, active:true }
   ]
@@ -2639,6 +2603,13 @@ function renderNav() {
       navigateTo(this.getAttribute('href'));
     });
   });
+  renderFooterLinks();
+}
+
+function renderFooterLinks() {
+  const links = getStore('nav_links').filter(l => l.active).sort((a,b) => a.order - b.order);
+  const row = document.getElementById('footerLinksRow');
+  if (row) row.innerHTML = links.map(l => '<a href="' + l.hash + '">' + l.label + '</a>').join('');
 }
 
 function renderHome() {
@@ -3130,6 +3101,7 @@ function closePolicyDetail(e) {
 }
 
 function updateFooterContact() {
+  var cfg = getStore('site_config');
   // 融易算
   var fp = document.getElementById('footerPhoneRys');
   var fe = document.getElementById('footerEmailRys');
@@ -3174,7 +3146,6 @@ function renderCooperation() {
   var coop = content.cooperation || DEFAULTS.page_content.cooperation;
   document.getElementById('cooperationTitle').textContent = coop.title;
   document.getElementById('cooperationDesc').textContent = coop.desc;
-  updateFooterContact();
 }
 
 function renderAbout() {
@@ -3909,7 +3880,7 @@ function addAdminPageItem(key) {
   const items = page.features || page.items || [];
   const newItem = page.features
     ? { icon:'\u{1F4E6}', title:'新模块', desc:'模块描述' }
-    : { icon:'\u{1F4E6}', title:'新方案', painPoints:'痛点描述', solutions:'解决方案' };
+    : { icon:'\u{1F4E6}', title:'新服务', desc:'服务描述' };
   items.push(newItem);
   if (page.features) page.features = items; else page.items = items;
   content[key] = page;
@@ -3979,6 +3950,9 @@ function saveAdminPageContent() {
   renderService();
   renderAbout();
   renderCooperation();
+  renderAIMall();
+  renderCases();
+  renderPolicy();
   adminToast('页面内容已保存，前台已更新');
 }
 
@@ -4033,16 +4007,12 @@ function saveAdminContact() {
 function renderAdminFooterForm() {
   const cfg = getStore('site_config');
   document.getElementById('adminFooterForm').innerHTML =
-    '<div class="form-group"><label>版权文字</label><input class="form-input" id="ft_copyright" value="' + escAttr(cfg.footerCopyright||'') + '"></div>' +
-    '<div class="form-group"><label>企业微信描述</label><input class="form-input" id="ft_qrWx" value="' + escAttr(cfg.footerQrWx||'') + '"></div>' +
-    '<div class="form-group"><label>公众号描述</label><input class="form-input" id="ft_qrMp" value="' + escAttr(cfg.footerQrMp||'') + '"></div>';
+    '<div class="form-group full"><label>版权文字</label><input class="form-input" id="ft_copyright" value="' + escAttr(cfg.footerCopyright||'') + '"></div>';
 }
 
 function saveAdminFooter() {
   const cfg = getStore('site_config');
   cfg.footerCopyright = document.getElementById('ft_copyright').value;
-  cfg.footerQrWx = document.getElementById('ft_qrWx').value;
-  cfg.footerQrMp = document.getElementById('ft_qrMp').value;
   setStore('site_config', cfg);
   updateFooterContact();
   adminToast('页脚配置已保存，前台已更新');
