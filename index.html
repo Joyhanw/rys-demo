@@ -85,7 +85,233 @@ body.admin-mode {
   --shadow-glow: 0 0 40px rgba(46,107,255,0.04);
 }
 
-/* ============ Reset & Base ============ */
+/* ============ Light Theme Overrides (Front-end Toggle) ============ */
+/* Unified approach: body provides one continuous background canvas.
+   Hero, page-hero, sections are all transparent — no banding.
+   Cards float via shadow-only elevation. No visible borders. */
+
+body.light-theme {
+  --bg-primary: #f2f4f9;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fafbfd;
+  --bg-input: #ffffff;
+  --border: rgba(0,0,0,0.05);
+  --border-light: rgba(0,0,0,0.03);
+  --text-primary: #172033;
+  --text-secondary: #536076;
+  --text-muted: #8a94a8;
+  --primary: #2E6BFF;
+  --primary-dark: #1a5aee;
+  --primary-glow: rgba(46,107,255,0.08);
+  --primary-soft: #eef3ff;
+  --accent: #f97316;
+  --accent-glow: rgba(249,115,22,0.1);
+  --success: #10b981;
+  --success-soft: #ecfdf5;
+  --warning: #f59e0b;
+  --warning-soft: #fffbeb;
+  --danger: #ef4444;
+  --danger-soft: #fef2f2;
+  --shadow-sm: 0 1px 3px rgba(16,24,40,0.04);
+  --shadow-md: 0 4px 14px rgba(16,24,40,0.05);
+  --shadow-lg: 0 12px 36px rgba(16,24,40,0.07);
+  --shadow-glow: 0 0 40px rgba(46,107,255,0.04);
+  background: linear-gradient(175deg, #eef1f7 0%, #f2f5fa 30%, #f5f7fb 60%, #f1f4f8 100%);
+}
+body.light-theme::before {
+  opacity: 0.06;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(46,107,255,0.12) 1px, transparent 0);
+  background-size: 36px 36px;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+body.light-theme::after { opacity: 0; }
+body.light-theme #frontendLayout { position: relative; z-index: 1; }
+
+/* Topbar - glass, nearly invisible separator */
+body.light-theme .topbar {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(16,24,40,0.02);
+}
+body.light-theme .topnav a:hover { background: rgba(46,107,255,0.04); }
+body.light-theme .btn-admin-entry:hover { background: rgba(46,107,255,0.04); }
+
+/* Hero — transparent body-gradient canvas + subtle atmospheric glow */
+body.light-theme .hero {
+  background: transparent;
+  border-bottom: none;
+  position: relative;
+}
+body.light-theme .hero::before {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(46,107,255,0.09) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 60%, rgba(124,58,237,0.04) 0%, transparent 45%);
+}
+body.light-theme .hero::after { display: none; }
+body.light-theme .hero-badge,
+body.light-theme .hero h1,
+body.light-theme .hero-desc,
+body.light-theme .hero-actions,
+body.light-theme .hero-stats { position: relative; z-index: 1; }
+body.light-theme .hero h1 span {
+  background: linear-gradient(135deg, #2E6BFF 0%, var(--primary) 35%, #7C3AED 65%, var(--accent) 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+body.light-theme .hero-stat-num { text-shadow: none; }
+body.light-theme .hero-stat {
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 16px;
+  padding: 16px 28px;
+  box-shadow: 0 2px 12px rgba(16,24,40,0.04);
+}
+body.light-theme .hero-stat:not(:last-child)::after { display: none; }
+
+/* Sections — fully transparent, no alternating stripes */
+body.light-theme .section,
+body.light-theme .section:nth-child(even) {
+  background: transparent;
+  position: relative;
+  padding: 80px 0;
+}
+
+/* Section header — clean, no container box */
+body.light-theme .section-header {
+  text-align: center; margin-bottom: 48px;
+  padding: 0; border-radius: 0;
+  background: transparent; border: none; box-shadow: none;
+}
+body.light-theme .section-label {
+  background: #eef3ff; border: none;
+  color: var(--primary); box-shadow: none;
+}
+body.light-theme .section-title { text-shadow: none; color: #172033; }
+
+/* Page hero — transparent body gradient + dim glow */
+body.light-theme .page-hero::before {
+  opacity: 0.25;
+  background: radial-gradient(ellipse, rgba(46,107,255,0.08) 0%, rgba(124,58,237,0.03) 35%, transparent 70%);
+}
+body.light-theme .page-hero-bg {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(46,107,255,0.08) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(124,58,237,0.04) 0%, transparent 45%);
+}
+body.light-theme .page-hero-bg::before {
+  content: ''; position: absolute; left: 50%; bottom: -40%; transform: translateX(-50%);
+  width: 140%; height: 80%; border-radius: 50%;
+  background: linear-gradient(180deg, rgba(46,107,255,0.04) 0%, rgba(240,244,252,0.2) 40%, rgba(245,247,250,0) 70%);
+}
+body.light-theme .page-hero h1,
+body.light-theme .page-hero p { position: relative; z-index: 1; }
+
+/* Cards — white, shadow-only elevation, no visible borders */
+body.light-theme .product-card,
+body.light-theme .service-card,
+body.light-theme .case-card,
+body.light-theme .activity-card,
+body.light-theme .policy-card,
+body.light-theme .park-profile,
+body.light-theme .solution-card,
+body.light-theme .community-post,
+body.light-theme .form-card,
+body.light-theme .data-table-wrap,
+body.light-theme .ent-modal,
+body.light-theme .policy-detail-modal,
+body.light-theme .activity-detail-modal {
+  background: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 1px 8px rgba(16,24,40,0.05);
+}
+body.light-theme .product-card,
+body.light-theme .service-card,
+body.light-theme .case-card,
+body.light-theme .activity-card,
+body.light-theme .policy-card,
+body.light-theme .community-post {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+body.light-theme .hero-stat,
+body.light-theme .coupon-item,
+body.light-theme .product-screenshot-placeholder,
+body.light-theme .pricing-row,
+body.light-theme .service-benefit-item,
+body.light-theme .login-choice-card {
+  background: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 1px 6px rgba(16,24,40,0.04);
+}
+
+/* Footer — subtle */
+body.light-theme .footer {
+  border-top: 1px solid rgba(0,0,0,0.04);
+  background: #f8fafd;
+}
+
+/* Modals */
+body.light-theme .modal-overlay { background: rgba(16,24,40,0.35); }
+body.light-theme .ent-modal-overlay { background: rgba(16,24,40,0.35); }
+body.light-theme .policy-detail-overlay { background: rgba(16,24,40,0.35); }
+body.light-theme .policy-detail-close:hover { background: rgba(46,107,255,0.05); border-color: rgba(46,107,255,0.12); }
+body.light-theme .activity-detail-close:hover { background: rgba(46,107,255,0.05); border-color: rgba(46,107,255,0.12); }
+body.light-theme .service-card::before { background: linear-gradient(90deg, transparent, rgba(46,107,255,0.16), transparent); }
+
+/* Card hover — shadow deepens, subtle border hint */
+body.light-theme .service-card:hover,
+body.light-theme .case-card:hover,
+body.light-theme .product-card:hover,
+body.light-theme .activity-card:hover,
+body.light-theme .policy-card:hover {
+  border-color: rgba(46,107,255,0.10);
+  box-shadow: 0 6px 22px rgba(16,24,40,0.08);
+  transform: translateY(-2px);
+}
+
+/* Separators — nearly invisible */
+body.light-theme .park-feature-row { border-bottom: 1px solid rgba(0,0,0,0.04); }
+body.light-theme .park-feature-row:first-child { border-top: none; }
+body.light-theme .about-row { border-top: 1px solid rgba(0,0,0,0.04); }
+body.light-theme .about-row:first-of-type { border-top: none; }
+body.light-theme .industry-edit-card { border-left-color: var(--primary); }
+body.light-theme .park-profile { background: transparent; border-color: transparent; box-shadow: none; }
+body.light-theme .park-feature-visual { border-color: rgba(46,107,255,0.08); background: #f5f7fd; }
+body.light-theme .park-profile-icon { border: 1px solid rgba(46,107,255,0.08); }
+body.light-theme .park-switcher { background: transparent; border: none; box-shadow: none; }
+body.light-theme .park-switch-tab { border-color: rgba(0,0,0,0.05); background: #ffffff; box-shadow: 0 1px 4px rgba(16,24,40,0.03); }
+body.light-theme .park-switch-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 2px 10px rgba(46,107,255,0.20); }
+body.light-theme .coupon-item { background: #ffffff; }
+body.light-theme .data-table tr:hover td { background: #f6f9fe; }
+body.light-theme .provider-hainiu { background: #eef3ff; color: #2E6BFF; }
+body.light-theme .provider-rongyisuan { background: #fff7ed; color: #f97316; }
+body.light-theme::-webkit-scrollbar-thumb { background: rgba(46,61,95,0.10); }
+body.light-theme::-webkit-scrollbar-thumb:hover { background: rgba(46,61,95,0.20); }
+body.light-theme .btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 6px 16px rgba(46,107,255,0.16);
+}
+body.light-theme .btn-outline {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.06);
+}
+body.light-theme .btn-outline:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+body.light-theme .logo-mark {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 6px 16px rgba(46,107,255,0.16);
+}
+
+
+
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
@@ -158,7 +384,9 @@ body.admin-mode #frontendLayout { display:none; }
   padding:0 32px;
 }
 body.admin-mode .topbar {
-  background:rgba(255,255,255,0.85);
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(16px) saturate(1.2);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
 }
 .topbar-left { display:flex; align-items:center; gap:32px; }
 .logo { display:flex; align-items:center; gap:10px; }
@@ -243,6 +471,19 @@ body.admin-mode .btn-admin-entry:hover { background:rgba(0,0,0,0.04); }
   transition:all .2s;
 }
 .btn-outline:hover { border-color:var(--primary); background:var(--primary-soft); }
+.btn-settle-highlight {
+  border-color:rgba(94,179,213,0.85) !important;
+  background:linear-gradient(135deg,#70d0f5 0%,#5eb3d5 44%,#4a9bc4 100%) !important;
+  color:#fff !important;
+  font-weight:600;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.22) inset, 0 10px 30px rgba(94,179,213,0.42), 0 0 30px rgba(94,179,213,0.22);
+}
+.btn-settle-highlight:hover {
+  border-color:#7ad8ff !important;
+  background:linear-gradient(135deg,#85ddff 0%,#6fc7ee 44%,#5eb3d5 100%) !important;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.32) inset, 0 14px 40px rgba(94,179,213,0.54), 0 0 40px rgba(94,179,213,0.32);
+  transform:translateY(-1px);
+}
 
 .hero-stats { display:flex; justify-content:center; gap:48px; margin-top:56px; }
 .hero-stat { text-align:center; position:relative; }
@@ -643,6 +884,10 @@ body.admin-mode .btn-admin-entry:hover { background:rgba(0,0,0,0.04); }
 .enterprise-result.not-found { background:var(--warning-soft); border:1px solid rgba(245,158,11,0.3); color:var(--warning); display:block; }
 
 /* Page Hero */
+.page-hero-bg { display:none; }
+body.light-theme .page-hero { position:relative; overflow:hidden; background:transparent; border-bottom:none; }
+body.light-theme .page-hero-bg { display:block; }
+body.light-theme .page-hero .container { position:relative; z-index:1; }
 .page-hero { padding:100px 0 60px; text-align:center; position:relative; }
 .page-hero::before {
   content:''; position:absolute; top:-20%; left:50%; transform:translateX(-50%);
@@ -1002,6 +1247,158 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
   line-height: 1.4;
 }
 
+/* ============ Multi-Park Switcher ============ */
+.park-switcher {
+  display: flex; gap: 8px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap;
+}
+.park-switch-tab {
+  padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border); color: var(--text-secondary);
+  background: var(--bg-card); transition: all .15s; cursor: pointer;
+}
+.park-switch-tab:hover { border-color: var(--primary); color: var(--text-primary); }
+.park-switch-tab.active {
+  background: var(--primary); border-color: var(--primary); color: #fff;
+  box-shadow: 0 0 14px rgba(94,179,213,0.2);
+}
+
+/* ============ Community Tabs ============ */
+.community-tabs {
+  display: flex; gap: 8px; justify-content: center; margin-bottom: 32px;
+}
+.community-tab {
+  padding: 8px 24px; border-radius: 20px; font-size: 14px; font-weight: 500;
+  border: 1px solid var(--border); color: var(--text-secondary);
+  background: var(--bg-card); transition: all .15s; cursor: pointer;
+}
+.community-tab:hover { border-color: var(--primary); color: var(--text-primary); }
+.community-tab.active {
+  background: var(--primary); border-color: var(--primary); color: #fff;
+  box-shadow: 0 0 14px rgba(94,179,213,0.2);
+}
+.community-panel { display: none; }
+.community-panel.active { display: block; }
+
+/* ============ Activity Card ============ */
+.activity-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); overflow: hidden;
+  transition: all .3s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.activity-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px; z-index:2;
+  background:linear-gradient(90deg, transparent, rgba(94,179,213,0.25), transparent);
+  opacity:0; transition:opacity .3s;
+}
+.activity-card:hover::before { opacity:1; }
+.activity-card:hover {
+  transform:translateY(-4px); border-color:rgba(94,179,213,0.4);
+  box-shadow:0 20px 48px rgba(0,0,0,0.65), 0 0 36px rgba(94,179,213,0.18);
+}
+.activity-card-img {
+  height: 160px; background-size: cover; background-position: center;
+  position: relative; overflow: hidden;
+}
+.activity-card-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--bg-card) 0%, transparent 50%);
+}
+.activity-card-status {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+}
+.activity-card-status.open { background: var(--success-soft); color: var(--success); }
+.activity-card-status.full { background: var(--warning-soft); color: var(--warning); }
+.activity-card-status.end { background: var(--danger-soft); color: var(--danger); }
+.activity-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+.activity-card-body h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: calc(15px * 1.4 * 2); }
+.activity-card-meta {
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+}
+.activity-card-meta span { display: flex; align-items: center; gap: 4px; }
+.activity-card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: calc(13px * 1.6 * 2); }
+.activity-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; height: 22px; overflow: hidden; }
+.activity-card-footer {
+  display: flex; gap: 8px; align-items: center; justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px; border-top: 1px solid var(--border);
+}
+.activity-card-count { font-size: 12px; color: var(--text-muted); }
+.activity-card-count b { color: var(--primary); }
+
+/* ============ Community Post Card ============ */
+.post-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 20px;
+  transition: all .2s; margin-bottom: 16px;
+}
+.post-card:hover { border-color: rgba(94,179,213,0.3); }
+.post-card-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.post-card-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--primary-soft); display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.post-card-author { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.post-card-date { font-size: 11px; color: var(--text-muted); }
+.post-card-category {
+  margin-left: auto; padding: 2px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 500; background: var(--primary-soft); color: var(--primary);
+}
+.post-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.post-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+.post-card-actions {
+  display: flex; gap: 16px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);
+}
+.post-card-action {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; color: var(--text-muted); cursor: pointer; transition: color .15s;
+}
+.post-card-action:hover { color: var(--primary); }
+
+/* ============ Login Choice Modal ============ */
+.login-choice-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px;
+}
+.login-choice-card {
+  background: var(--bg-card-hover); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 24px 16px; text-align: center;
+  cursor: pointer; transition: all .2s;
+}
+.login-choice-card:hover {
+  border-color: var(--primary); box-shadow: 0 0 20px var(--primary-glow);
+}
+.login-choice-icon { font-size: 36px; margin-bottom: 10px; }
+.login-choice-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.login-choice-desc { font-size: 12px; color: var(--text-muted); }
+
+/* ============ Mini Program QR in modal ============ */
+.mp-qr-box {
+  text-align: center; padding: 8px 0;
+}
+.mp-qr-box .ent-qr-placeholder {
+  width: 180px; height: 180px; margin: 0 auto 12px;
+}
+
+/* ============ Service card logged-in hint ============ */
+.service-card-logged {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 500;
+  background: var(--success-soft); color: var(--success);
+}
+
+@media(max-width:768px){
+  .login-choice-grid { grid-template-columns: 1fr; }
+  .park-switcher { gap: 6px; }
+  .park-switch-tab { padding: 6px 14px; font-size: 12px; }
+}
+
+
 /* ============ Responsive ============ */
 @media(max-width:768px){
   .container { padding:0 20px; }
@@ -1011,6 +1408,8 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
   .hero-stats { gap:28px; flex-wrap:wrap; }
   .section { padding:56px 0; }
   .section-title { font-size:24px; }
+  body.light-theme .section { padding:56px 0; }
+  body.light-theme .section-header { padding:0; }
   .sidebar { width:60px; }
   .sidebar-brand-text,.sidebar-brand-sub,.sidebar-item span,.sidebar-section,.sidebar-footer span { display:none; }
   .sidebar-item { justify-content:center; padding:10px; }
@@ -1240,6 +1639,46 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 .service-card-body h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
 .service-card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 .service-card-footer { margin-top: 16px; }
+.service-card-clickable { cursor: pointer; position: relative; }
+.service-card-brief { display: block; }
+.service-card-detail { display: none; }
+.service-card-clickable.expanded { grid-column: 1 / -1; background: var(--bg-card-hover); }
+.service-card-clickable.expanded .service-card-brief { display: none; }
+.service-card-clickable.expanded .service-card-detail { display: block; margin-top: 8px; }
+.service-card-hover-qr {
+  position: absolute; inset: 0;
+  background: rgba(10,14,23,0.92);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; opacity: 0; pointer-events: none;
+  transition: opacity .3s; border-radius: var(--r-lg);
+  z-index: 10;
+}
+.service-card:hover .service-card-hover-qr { opacity: 1; pointer-events: auto; }
+.service-card-clickable.expanded .service-card-hover-qr { display: none; }
+.service-coupon-banner {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px; margin: 12px 0 16px; padding: 14px;
+  background: linear-gradient(135deg, rgba(255,122,51,0.08), rgba(94,179,213,0.08));
+  border: 1px dashed rgba(255,122,51,0.3); border-radius: var(--r-md);
+}
+.coupon-item {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-card); padding: 10px 12px; border-radius: var(--r-md);
+  border: 1px solid var(--border);
+}
+.coupon-icon { font-size: 20px; }
+.coupon-info { flex: 1; min-width: 0; }
+.coupon-title { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+.coupon-desc { font-size: 11px; color: var(--text-muted); }
+.coupon-tag {
+  background: var(--accent); color: #fff;
+  font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; white-space: nowrap;
+}
+.service-detail-qr {
+  margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);
+  text-align: center;
+}
 @media(max-width:768px){
   .service-grid { grid-template-columns: 1fr; }
 }
@@ -1565,7 +2004,8 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
     <nav class="topnav" id="topnav"></nav>
   </div>
   <div class="topbar-right">
-    <a href="#cooperation" class="btn-cta-sm">立即入驻</a>
+    <a href="javascript:void(0)" class="btn-admin-entry" id="themeToggleBtn" onclick="toggleTheme();return false;" title="切换主题">🌙</a>
+    <a href="javascript:void(0)" class="btn-admin-entry hidden" id="logoutBtn" onclick="logoutUser();return false;" title="退出登录">退出</a>
     <a href="javascript:void(0)" class="btn-admin-entry" title="系统配置" id="adminEntryBtn" onclick="enterAdminMode();return false;">&#9881;</a>
   </div>
 </header>
@@ -1579,7 +2019,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
       <p class="hero-desc" id="heroDesc">聚合园区政策、企业服务与AI产品能力，为创业者和企业提供一站式数字化服务平台</p>
       <div class="hero-actions">
         <a href="#ai-mall" class="btn-primary">&#x25B6; 探索AI能力</a>
-        <a href="#cooperation" class="btn-outline">申请入驻</a>
+        <a href="javascript:void(0)" class="btn-outline btn-settle-highlight" onclick="openSettleInModal();return false;">立即入驻</a>
       </div>
       <div class="hero-stats" id="heroStats"></div>
     </div>
@@ -1621,7 +2061,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
         <div style="position:absolute;top:-40%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(94,179,213,0.08) 0%,transparent 70%);pointer-events:none;"></div>
         <h2 style="font-size:28px;font-weight:700;margin-bottom:12px;position:relative;">准备好开始了吗？</h2>
         <p style="color:var(--text-secondary);margin-bottom:28px;position:relative;">立即入驻OPC园区，体验AI能力中心</p>
-        <a href="#cooperation" class="btn-primary" style="position:relative;">立即入驻</a>
+        <a href="javascript:void(0)" class="btn-primary" style="position:relative;" onclick="openSettleInModal();return false;">立即入驻</a>
       </div>
     </div>
   </div>
@@ -1630,6 +2070,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 <!-- Page: OPC Park -->
 <section class="page" id="page-park">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
       <h1 id="parkTitle">OPC 园区</h1>
       <p id="parkDesc"></p>
@@ -1643,6 +2084,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 <!-- Page: Solution -->
 <section class="page" id="page-solution">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
       <h1 id="solutionTitle">园区解决方案</h1>
       <p id="solutionDesc">针对不同行业场景，提供可落地的智能营销与数字化运营能力</p>
@@ -1658,6 +2100,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 <!-- Page: Enterprise Service -->
 <section class="page" id="page-service">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
       <h1 id="serviceTitle">企业服务</h1>
       <p id="serviceDesc">从注册到入驻，一站式企业基础服务</p>
@@ -1677,6 +2120,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 <!-- Page: AI Mall -->
 <section class="page" id="page-ai-mall">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
       <h1 id="aiMallTitle">AI 超市</h1>
       <p id="aiMallDesc">统一AI能力中心，按需选择、快速试用</p>
@@ -1697,6 +2141,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 <!-- Page: Cases -->
 <section class="page" id="page-cases">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
       <h1 id="casesTitle">成功案例</h1>
       <p id="casesDesc">来自各行业的真实实践</p>
@@ -1713,6 +2158,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 <!-- Page: Policy -->
 <section class="page" id="page-policy">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
       <h1 id="policyTitle">政策资讯</h1>
       <p id="policyDesc">最新园区政策与行业动态</p>
@@ -1744,71 +2190,171 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
   </div>
 </div>
 
-<!-- Page: Cooperation -->
-<section class="page" id="page-cooperation">
+<!-- Page: Community -->
+<section class="page" id="page-community">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
-      <h1 id="cooperationTitle">合作入驻</h1>
-      <p id="cooperationDesc">三层合作方案，从小步快跑到战略共建 — 总有一个适合您</p>
+      <h1 id="communityTitle">社区活动</h1>
+      <p id="communityDesc">园区资源共享、活动报名、社区互动 — 连接每一位园区伙伴</p>
     </div>
   </div>
+
+  <!-- Community Tabs -->
   <div class="section" style="padding-top:0;">
     <div class="container">
-      <div class="coop-plans" id="coopPlans" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto 48px;">
-        <div class="coop-plan-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;text-align:center;transition:all .25s;position:relative;" onmouseover="this.style.borderColor='var(--primary)';this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow='';">
-          <div style="font-size:36px;margin-bottom:12px;">🏗</div>
-          <h3 style="font-size:20px;font-weight:700;margin-bottom:4px;">标准版</h3>
-          <p style="font-size:12px;color:var(--text-muted);margin-bottom:20px;">适合转型期园区</p>
-          <ul style="list-style:none;text-align:left;font-size:13px;color:var(--text-secondary);line-height:2.2;margin-bottom:24px;">
-            <li>✅ AI园区网站（AI生成）</li>
-            <li>✅ 企微AI助手部署</li>
-            <li>✅ AI财税代账深度接入</li>
-            <li>✅ 核心政策申报全流程指导</li>
-            <li>✅ 税检存量客户转化方案</li>
-            <li>✅ OPC数字化经管平台部署</li>
-          </ul>
-          <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px;">启动：现场诊断→定制方案→签约上线</p>
-          <button class="btn-coop-cta" onclick="openCoopModal('标准版')">💬 联系我们</button>
-        </div>
-        <div class="coop-plan-card" style="background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--r-lg);padding:32px;text-align:center;transition:all .25s;position:relative;box-shadow:0 0 32px var(--primary-glow);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg),0 0 40px var(--primary-glow)';" onmouseout="this.style.transform='';this.style.boxShadow='0 0 32px var(--primary-glow)';">
-          <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;padding:3px 14px;border-radius:10px;font-size:11px;font-weight:600;">最受欢迎</div>
-          <div style="font-size:36px;margin-bottom:12px;">🏢</div>
-          <h3 style="font-size:20px;font-weight:700;margin-bottom:4px;">进阶版</h3>
-          <p style="font-size:12px;color:var(--text-muted);margin-bottom:20px;">适合成长型园区</p>
-          <ul style="list-style:none;text-align:left;font-size:13px;color:var(--text-secondary);line-height:2.2;margin-bottom:24px;">
-            <li>✅ 标准版全部内容</li>
-            <li>✅ 品牌挂牌授权</li>
-            <li>✅ 线上AI工具+技能培训</li>
-            <li>✅ 智能体工作台+Token权益</li>
-            <li>✅ 园区企业风险AI管控系统</li>
-            <li>✅ 投融资/专家资源对接</li>
-          </ul>
-          <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px;">启动：试点2-3月→评估效果→全面铺开</p>
-          <button class="btn-coop-cta btn-coop-cta-primary" onclick="openCoopModal('进阶版')">💬 联系我们</button>
-        </div>
-        <div class="coop-plan-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;text-align:center;transition:all .25s;" onmouseover="this.style.borderColor='var(--primary)';this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow='';">
-          <div style="font-size:36px;margin-bottom:12px;">🏛</div>
-          <h3 style="font-size:20px;font-weight:700;margin-bottom:4px;">战略版</h3>
-          <p style="font-size:12px;color:var(--text-muted);margin-bottom:20px;">适合政府考核型/大型园区</p>
-          <ul style="list-style:none;text-align:left;font-size:13px;color:var(--text-secondary);line-height:2.2;margin-bottom:24px;">
-            <li>✅ 进阶版全部内容</li>
-            <li>✅ 平台级战略合作协议</li>
-            <li>✅ 跨境/OPC园区共建</li>
-            <li>✅ 数据金融（信用评分输出）</li>
-            <li>✅ 政府考核报表+产业分析</li>
-            <li>✅ 区域总部落地支持</li>
-          </ul>
-          <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px;">启动：签战略协议→先跑业务→再落实体</p>
-          <button class="btn-coop-cta" onclick="openCoopModal('战略版')">💬 联系我们</button>
-        </div>
+      <div class="community-tabs" id="communityTabs">
+        <button class="community-tab active" data-tab="activities">🎉 精彩活动</button>
+        <button class="community-tab" data-tab="posts">💬 园区社区</button>
+      </div>
+
+      <!-- Activities Panel -->
+      <div class="community-panel active" id="activitiesPanel">
+        <div class="card-grid card-grid-3" id="activityGrid"></div>
+      </div>
+
+      <!-- Posts Panel -->
+      <div class="community-panel" id="postsPanel">
+        <div id="communityPosts"></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Activity Detail Modal -->
+<div class="policy-detail-overlay" id="activityDetailOverlay" onclick="closeActivityDetail(event)">
+  <div class="policy-detail-modal" onclick="event.stopPropagation()">
+    <div class="policy-detail-hero" id="activityDetailHero">
+      <div class="policy-detail-hero-overlay"></div>
+      <button class="policy-detail-close" onclick="closeActivityDetail()">&times;</button>
+    </div>
+    <div class="policy-detail-body">
+      <div class="policy-detail-meta">
+        <span class="policy-detail-tag news" id="activityDetailTag">活动</span>
+        <span class="policy-detail-date" id="activityDetailDate">2025年7月10日</span>
+      </div>
+      <h2 id="activityDetailTitle"></h2>
+      <div id="activityDetailInfo" style="margin-bottom:16px;font-size:13px;color:var(--text-secondary);"></div>
+      <div class="policy-detail-content" id="activityDetailContent"></div>
+      <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;">
+        <button class="btn-primary" id="activitySignupBtn" onclick="openActivitySignup()">立即报名</button>
+        <button class="btn-outline" onclick="shareActivity()">转发活动</button>
+        <span class="policy-detail-back" onclick="closeActivityDetail()">← 返回列表</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Activity Signup Modal -->
+<div class="ent-modal-overlay hidden" id="activitySignupOverlay">
+  <div class="ent-modal">
+    <div class="ent-modal-header">
+      <h3 id="activitySignupTitle">📝 活动报名</h3>
+      <button class="ent-modal-close" onclick="closeActivitySignup()">&times;</button>
+    </div>
+    <div class="ent-modal-body">
+      <div class="ent-step active" id="activitySignupStep1">
+        <div class="form-group">
+          <label>姓名 <span style="color:var(--danger);">*</span></label>
+          <input type="text" class="form-input" id="signupName" placeholder="请输入您的姓名">
+        </div>
+        <div class="form-group">
+          <label>手机号 <span style="color:var(--danger);">*</span></label>
+          <input type="text" class="form-input" id="signupPhone" placeholder="请输入手机号码">
+        </div>
+        <div class="form-group">
+          <label>企业/园区名称</label>
+          <input type="text" class="form-input" id="signupCompany" placeholder="请输入企业或园区名称">
+        </div>
+        <div class="form-group">
+          <label>备注</label>
+          <textarea class="form-input form-textarea" id="signupMessage" placeholder="如有特殊需求请备注..."></textarea>
+        </div>
+        <div class="ent-modal-actions">
+          <button class="btn-outline" onclick="closeActivitySignup()">取消</button>
+          <button class="btn-primary" onclick="submitActivitySignup()">提交报名</button>
+        </div>
+      </div>
+      <div class="ent-step" id="activitySignupStep2">
+        <div class="ent-result-box registered">
+          <div style="font-size:42px;margin-bottom:10px;">✅</div>
+          <h4>报名成功</h4>
+          <p id="activitySignupResultMsg"></p>
+          <div class="ent-result-actions">
+            <button class="btn-outline" onclick="closeActivitySignup()">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share Modal -->
+<div class="ent-modal-overlay hidden" id="shareModalOverlay">
+  <div class="ent-modal" style="width:360px;">
+    <div class="ent-modal-header">
+      <h3>🔗 转发活动</h3>
+      <button class="ent-modal-close" onclick="closeShareModal()">&times;</button>
+    </div>
+    <div class="ent-modal-body" style="text-align:center;">
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">扫描下方二维码或复制链接分享给好友</p>
+      <div class="ent-qr-placeholder" style="width:160px;height:160px;margin-bottom:16px;">
+        <span>活动二维码<br>（占位）</span>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <input type="text" class="form-input" id="shareLinkInput" value="" readonly style="flex:1;font-size:12px;">
+        <button class="btn-primary btn-sm" onclick="copyShareLink()">复制</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settle In Modal -->
+<div class="ent-modal-overlay hidden" id="settleInOverlay">
+  <div class="ent-modal" style="width:440px;">
+    <div class="ent-modal-header">
+      <h3>🏢 企业入驻申请</h3>
+      <button class="ent-modal-close" onclick="closeSettleInModal()">&times;</button>
+    </div>
+    <div class="ent-modal-body">
+      <div class="form-group">
+        <label>企业名称 <span style="color:var(--danger);">*</span></label>
+        <input type="text" class="form-input" id="siCompanyName" placeholder="请输入企业全称">
+      </div>
+      <div class="form-group">
+        <label>联系人 <span style="color:var(--danger);">*</span></label>
+        <input type="text" class="form-input" id="siContactName" placeholder="请输入联系人姓名">
+      </div>
+      <div class="form-group">
+        <label>联系电话 <span style="color:var(--danger);">*</span></label>
+        <input type="text" class="form-input" id="siContactPhone" placeholder="请输入手机号码">
+      </div>
+      <div class="form-group">
+        <label>所在地区</label>
+        <select class="form-input" id="siRegion" style="width:100%;">
+          <option value="">请选择省份</option>
+          <option>北京</option><option>上海</option><option>天津</option><option>重庆</option>
+          <option>浙江</option><option>广东</option><option>江苏</option><option>山东</option>
+          <option>福建</option><option>四川</option><option>湖北</option><option>湖南</option>
+          <option>河南</option><option>河北</option><option>安徽</option><option>辽宁</option>
+          <option>陕西</option><option>江西</option><option>广西</option><option>云南</option>
+          <option>贵州</option><option>山西</option><option>吉林</option><option>黑龙江</option>
+          <option>甘肃</option><option>海南</option><option>内蒙古</option><option>新疆</option>
+          <option>西藏</option><option>宁夏</option><option>青海</option>
+        </select>
+      </div>
+      <div class="ent-modal-actions">
+        <button class="btn-outline" onclick="closeSettleInModal()">取消</button>
+        <button class="btn-primary" onclick="submitSettleIn()">提交申请</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Page: About -->
 <section class="page" id="page-about">
   <div class="page-hero">
+    <div class="page-hero-bg"></div>
     <div class="container">
       <h1 id="aboutTitle">关于我们</h1>
       <p id="aboutDesc">OPC × 海牛 × 融易算，三方联合打造AI能力中心</p>
@@ -2044,61 +2590,6 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
   </div>
 </div>
 
-<!-- Cooperation Inquiry Modal -->
-<div class="ent-modal-overlay hidden" id="coopModalOverlay">
-  <div class="ent-modal">
-    <div class="ent-modal-header">
-      <h3>&#x1F91D; 提交合作咨询</h3>
-      <button class="ent-modal-close" onclick="closeCoopModal()">&times;</button>
-    </div>
-    <div class="ent-modal-body">
-      <div class="ent-step active" id="coopStep1">
-        <div class="form-group">
-          <label>企业/园区名称 <span style="color:var(--danger);">*</span></label>
-          <input type="text" class="form-input" id="coopCompany" placeholder="请输入企业或园区名称">
-        </div>
-        <div class="form-group">
-          <label>联系人 <span style="color:var(--danger);">*</span></label>
-          <input type="text" class="form-input" id="coopName" placeholder="请输入联系人姓名">
-        </div>
-        <div class="form-group">
-          <label>联系电话 <span style="color:var(--danger);">*</span></label>
-          <input type="text" class="form-input" id="coopPhone" placeholder="请输入联系电话">
-        </div>
-        <div class="form-group">
-          <label>意向方案</label>
-          <select class="form-input" id="coopPlan" style="width:100%;">
-            <option>标准版</option>
-            <option>进阶版</option>
-            <option>战略版</option>
-            <option>先了解再确定</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>需求描述</label>
-          <textarea class="form-input form-textarea" id="coopDesc" placeholder="请描述您的园区情况与合作需求..."></textarea>
-        </div>
-        <div class="ent-modal-actions">
-          <button class="btn-outline" onclick="closeCoopModal()">取消</button>
-          <button class="btn-primary" onclick="submitCoop()">提交咨询</button>
-        </div>
-      </div>
-      <div class="ent-step" id="coopStep2">
-        <div class="ent-result-box registered">
-          <div style="font-size:42px;margin-bottom:10px;">&#x2705;</div>
-          <h4 id="coopResultTitle">提交成功</h4>
-          <p id="coopResultMsg" style="margin-top:6px;"></p>
-          <p style="color:var(--text-muted);font-size:12px;margin-top:10px;">我们将在 <b>1个工作日内</b> 与您联系</p>
-        </div>
-        <div style="text-align:center;margin-top:14px;">
-          <button class="btn-outline btn-sm" onclick="closeCoopModal()">关闭</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <!-- ============ Admin Layout ============ -->
 <div id="adminLayout">
 
@@ -2133,6 +2624,17 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
     <div class="sidebar-item" data-admin-panel="policies" onclick="switchAdminPanel('policies')">
       <span class="sidebar-item-icon">&#x1F4F0;</span><span>政策资讯</span>
     </div>
+    <div class="sidebar-section">社区运营</div>
+    <div class="sidebar-item" data-admin-panel="activities" onclick="switchAdminPanel('activities')">
+      <span class="sidebar-item-icon">🎉</span><span>活动管理</span>
+    </div>
+    <div class="sidebar-item" data-admin-panel="posts" onclick="switchAdminPanel('posts')">
+      <span class="sidebar-item-icon">💬</span><span>社区帖子</span>
+    </div>
+    <div class="sidebar-item" data-admin-panel="analytics" onclick="switchAdminPanel('analytics')">
+      <span class="sidebar-item-icon">📊</span><span>数据分析</span>
+    </div>
+    <div class="sidebar-section">内容配置</div>
     <div class="sidebar-item" data-admin-panel="pages" onclick="switchAdminPanel('pages')">
       <span class="sidebar-item-icon">&#x1F4C4;</span><span>页面内容</span>
     </div>
@@ -2235,6 +2737,42 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
       </div>
     </div>
 
+    <!-- Activities Panel -->
+    <div class="admin-panel" id="admin-panel-activities">
+      <div class="data-table-wrap">
+        <div class="data-table-header">
+          <h3>活动列表</h3>
+          <button class="btn btn-primary btn-sm" onclick="openAdminActivityModal()">+ 新增活动</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>排序</th><th>标题</th><th>日期</th><th>状态</th><th>报名人数</th><th>操作</th></tr></thead>
+          <tbody id="adminActivitiesTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Posts Panel -->
+    <div class="admin-panel" id="admin-panel-posts">
+      <div class="data-table-wrap">
+        <div class="data-table-header">
+          <h3>社区帖子列表</h3>
+          <button class="btn btn-primary btn-sm" onclick="openAdminPostModal()">+ 新增帖子</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>排序</th><th>标题</th><th>作者</th><th>分类</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody id="adminPostsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Analytics Panel -->
+    <div class="admin-panel" id="admin-panel-analytics">
+      <div class="form-card">
+        <div class="form-section-title">活动报名统计</div>
+        <div id="adminAnalyticsContent"></div>
+      </div>
+    </div>
+
     <!-- Footer Panel -->
     <div class="admin-panel" id="admin-panel-footer">
       <div class="form-card">
@@ -2257,7 +2795,7 @@ body.admin-mode .provider-rongyisuan { background:#fff7ed; color:#f97316; }
 <script>
 // ============ Shared Data Layer ============
 const DEFAULTS = {
-  DATA_VERSION: 20,
+  DATA_VERSION: 23,
   site_config: {
     pageTitle: 'OPC × 海牛 AI能力中心',
     logoText: 'OPC × 海牛',
@@ -2315,23 +2853,25 @@ const DEFAULTS = {
     { id:'pl4', title:'OPC园区与海牛达成战略合作，共建AI能力中心', summary:'双方将在AI产品、园区数字化、企业服务等领域深度合作，打造一站式智能服务平台', content:'近日，OPC园区与海牛AI正式签署战略合作协议，双方将围绕AI能力中心建设、园区数字化转型、企业智能服务等领域展开深度合作。\n\n一、合作背景\nOPC园区作为全国领先的一人公司（One Person Company）社区运营商，已在28个省份、65个城市布局426处OPC社区。海牛AI是国内领先的AI应用平台，具备AI应用生成器、智能体解决方案、AI算力服务等核心能力。\n\n二、合作内容\n（一）共建AI能力中心：在OPC园区内设立AI能力中心，向入驻企业提供AI应用生成器、智能体工作台、GPU算力等一站式AI服务。\n\n（二）园区数字化升级：利用AI技术对园区运营管理系统进行全面升级，实现企业生命周期智能管理、风险实时预警、政府考核报表自动生成。\n\n（三）企业赋能计划：面向园区企业推出AI加速包，包含AI应用搭建培训、智能体定制咨询、算力优惠等，帮助企业快速拥抱AI。\n\n三、合作愿景\n双方计划在一年内将AI能力中心覆盖至100个重点OPC园区，服务超过1万家入驻企业，打造园区+AI深度融合的行业标杆。', image:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80', date:'2025-06-01', category:'资讯', order:4, active:true }
   ],
   page_content: {
-    park: {
-      parkName:'杭州未来科技城OPC园区',
-      parkLocation:'浙江省杭州市余杭区',
-      parkArea:'12万m²',
-      parkEnterprises:'200+',
-      parkIcon:'\u{1F3ED}',
-      title:'OPC 园区',
-      desc:'位于杭州城西科创大走廊核心区域，聚焦人工智能、大数据、云计算等前沿科技领域。园区配备完善的算力基础设施和AI能力平台，是AI创业者的超级孵化生态',
-      features:[
-        { icon:'\u{1F3EC}', title:'产业聚集', desc:'毗邻阿里巴巴、字节跳动、网易等头部企业，形成AI产业链上下游协同生态。园区定期举办技术沙龙、创业大赛、投融资对接会，为企业提供丰富的合作与发展机会' },
-        { icon:'⚡', title:'算力中心', desc:'园区自建GPU算力集群，配备A100/H100等高性能计算资源，入驻企业可享受算力券补贴，大幅降低AI研发成本' },
-        { icon:'\u{1F3E0}', title:'办公空间', desc:'提供共享工位、独立办公室、实验室等多种空间选择，精装修交付、拎包入驻。配备高速网络、会议室、路演厅等公共设施' },
-        { icon:'\u{1F4B0}', title:'政策扶持', desc:'享受杭州市及余杭区两级政策叠加，涵盖租金补贴、税收优惠、人才引进奖励、研发费用加计扣除等，综合扶持力度行业领先' },
-        { icon:'\u{1F91D}', title:'创业服务', desc:'一站式工商注册、财税代理、资质办理、法律咨询等企业服务，园区管家式运营团队全程陪伴企业成长' },
-        { icon:'\u{1F308}', title:'生活配套', desc:'园区周边地铁5号线直达，配套人才公寓、食堂、咖啡厅、健身房、篮球场等，打造工作生活一体化的青年社区' }
-      ]
-    },
+    parks: [
+      {
+        parkName:'杭州未来科技城OPC园区',
+        parkLocation:'浙江省杭州市余杭区',
+        parkArea:'12万m²',
+        parkEnterprises:'200+',
+        parkIcon:'\u{1F3ED}',
+        title:'OPC 园区',
+        desc:'位于杭州城西科创大走廊核心区域，聚焦人工智能、大数据、云计算等前沿科技领域。园区配备完善的算力基础设施和AI能力平台，是AI创业者的超级孵化生态',
+        features:[
+          { icon:'\u{1F3EC}', title:'产业聚集', desc:'毗邻阿里巴巴、字节跳动、网易等头部企业，形成AI产业链上下游协同生态。园区定期举办技术沙龙、创业大赛、投融资对接会，为企业提供丰富的合作与发展机会' },
+          { icon:'⚡', title:'算力中心', desc:'园区自建GPU算力集群，配备A100/H100等高性能计算资源，入驻企业可享受算力券补贴，大幅降低AI研发成本' },
+          { icon:'\u{1F3E0}', title:'办公空间', desc:'提供共享工位、独立办公室、实验室等多种空间选择，精装修交付、拎包入驻。配备高速网络、会议室、路演厅等公共设施' },
+          { icon:'\u{1F4B0}', title:'政策扶持', desc:'享受杭州市及余杭区两级政策叠加，涵盖租金补贴、税收优惠、人才引进奖励、研发费用加计扣除等，综合扶持力度行业领先' },
+          { icon:'\u{1F91D}', title:'创业服务', desc:'一站式工商注册、财税代理、资质办理、法律咨询等企业服务，园区管家式运营团队全程陪伴企业成长' },
+          { icon:'\u{1F308}', title:'生活配套', desc:'园区周边地铁5号线直达，配套人才公寓、食堂、咖啡厅、健身房、篮球场等，打造工作生活一体化的青年社区' }
+        ]
+      }
+    ],
     service: { title:'企业服务', desc:'从注册到入驻，一站式企业基础服务，覆盖企业全生命周期', items:[
       { icon:'\u{1F4CB}', title:'工商注册', desc:'一站式企业注册、变更、注销服务。支持有限公司、合伙企业、个体户等多种主体类型，线上提交材料，进度实时追踪，最快3个工作日下证' },
       { icon:'\u{1F4B0}', title:'代理记账', desc:'资深财税团队+AI智能记账系统，代理记账、纳税申报、财税咨询全覆盖。自动归集票据、智能生成报表，合规高效，让企业主专注核心业务' },
@@ -2477,11 +3017,48 @@ const DEFAULTS = {
           '<div class="about-row-visual">' + aboutVisualSVG('opc') + '</div>' +
         '</div>'
     },
-    cooperation: { title:'合作入驻', desc:'欢迎咨询产品能力、合作模式与入驻事宜' },
     policy: { title:'政策资讯', desc:'最新园区政策与行业动态' },
+    community: { title:'社区活动', desc:'园区资源共享、活动报名、社区互动' },
     'ai-mall': { title:'AI 超市', desc:'统一AI能力中心，按需选择、快速试用' },
     cases: { title:'成功案例', desc:'来自各行业的真实实践' }
   },
+  activities: [
+    { id:'a1', title:'AI财税沙龙 — 小微企业税务优化专场', summary:'特邀融易算资深财税顾问，为园区企业提供税务优化实操指导', content:'本次沙龙将围绕小微企业常见税务问题展开深度讲解，涵盖增值税优惠、所得税减免、发票管理实务等核心内容。', image:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80', date:'2025-07-10', time:'14:00-17:00', location:'杭州未来科技城OPC园区A座路演厅', tags:['财税','沙龙'], status:'报名中', maxPeople:50, signedUp:12, order:1, active:true },
+    { id:'a2', title:'AI应用生成器实操训练营', summary:'零基础学会用AI搭建企业级智能应用', content:'两天实战训练营，从需求分析到应用上线，手把手教你用海牛AI应用生成器搭建智能客服、数据分析等应用。', image:'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80', date:'2025-07-18', time:'09:00-18:00', location:'线上直播 + 线下实操', tags:['AI','培训'], status:'报名中', maxPeople:100, signedUp:13, order:2, active:true }
+  ],
+  community_posts: [
+    { id:'cp1', title:'园区共享会议室使用指南', content:'各位园区伙伴，共享会议室位于A座3楼，支持微信预约。配备投影仪、白板、视频会议系统。请提前一天预约，使用完毕后保持整洁。', author:'OPC运营小助手', authorAvatar:'👤', date:'2025-07-01', category:'公告', likes:23, comments:5, order:1, active:true },
+    { id:'cp2', title:'有人需要财税代账服务推荐吗？', content:'我们刚入驻园区，找了融易算做代账，体验还不错，AI自动取票挺方便的。有需要的朋友可以私信我，可以推荐专属顾问。', author:'创业者小李', authorAvatar:'👨‍💼', date:'2025-07-02', category:'互助', likes:15, comments:8, order:2, active:true }
+  ],
+  signups: [
+    { id:'s1', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'张三', phone:'13800138001', company:'杭州创新科技', message:'希望了解增值税优惠政策', date:'2025-07-01' },
+    { id:'s2', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'李四', phone:'13900139002', company:'未来网络', message:'', date:'2025-07-01' },
+    { id:'s3', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'王五', phone:'13700137003', company:'智慧物流', message:'带财务同事一起参加', date:'2025-07-02' },
+    { id:'s4', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'赵六', phone:'13600136004', company:'星辰传媒', message:'', date:'2025-07-02' },
+    { id:'s5', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'孙七', phone:'13500135005', company:'绿能环保', message:'想了解所得税减免', date:'2025-07-02' },
+    { id:'s6', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'周八', phone:'13400134006', company:'云端数据', message:'', date:'2025-07-03' },
+    { id:'s7', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'吴九', phone:'13300133007', company:'蓝海贸易', message:'首次参加园区活动', date:'2025-07-03' },
+    { id:'s8', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'郑十', phone:'13200132008', company:'智造工坊', message:'', date:'2025-07-03' },
+    { id:'s9', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'钱十一', phone:'13100131009', company:'数字农业', message:'希望获得PPT资料', date:'2025-07-04' },
+    { id:'s10', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'陈十二', phone:'13000130010', company:'文创空间', message:'', date:'2025-07-04' },
+    { id:'s11', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'刘明', phone:'13800138111', company:'迅达科技', message:'', date:'2025-07-05' },
+    { id:'s12', activityId:'a1', activityName:'AI财税沙龙 — 小微企业税务优化专场', name:'黄强', phone:'13900139222', company:'优享生活', message:'关注发票管理', date:'2025-07-05' },
+    { id:'s13', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'林小', phone:'13800138333', company:'创客联盟', message:'零基础可以参加吗', date:'2025-07-02' },
+    { id:'s14', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'何大', phone:'13900139444', company:'智算中心', message:'', date:'2025-07-02' },
+    { id:'s15', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'高志', phone:'13700137555', company:'未来教育', message:'团队3人报名', date:'2025-07-03' },
+    { id:'s16', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'马远', phone:'13600136666', company:'新零售科技', message:'', date:'2025-07-03' },
+    { id:'s17', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'罗文', phone:'13500135777', company:'跨境通', message:'希望学习智能客服搭建', date:'2025-07-04' },
+    { id:'s18', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'梁静', phone:'13400134888', company:'健康管家', message:'', date:'2025-07-04' },
+    { id:'s19', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'宋凯', phone:'13300133999', company:'车联天下', message:'对数据分析模块感兴趣', date:'2025-07-05' },
+    { id:'s20', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'唐丽', phone:'13200132000', company:'美食云', message:'', date:'2025-07-05' },
+    { id:'s21', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'韩冰', phone:'13100133111', company:'建筑设计院', message:'2人参加', date:'2025-07-05' },
+    { id:'s22', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'冯磊', phone:'13000130222', company:'金融智库', message:'', date:'2025-07-06' },
+    { id:'s23', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'董洋', phone:'13800138345', company:'物流大脑', message:'希望获得算力优惠', date:'2025-07-06' },
+    { id:'s24', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'曾辉', phone:'13900139456', company:'影视制作', message:'', date:'2025-07-06' },
+    { id:'s25', activityId:'a2', activityName:'AI应用生成器实操训练营', name:'潘虹', phone:'13700137678', company:'法律咨询', message:'关注文档自动化', date:'2025-07-06' }
+  ],
+  user_session: { isLoggedIn: false, companyName: '', loginTime: null, loginType: '' },
+  settle_applications: [],
   nav_links: [
     { id:'n1', label:'首页', hash:'#home', order:1, active:true },
     { id:'n2', label:'OPC园区', hash:'#park', order:2, active:true },
@@ -2490,7 +3067,7 @@ const DEFAULTS = {
     { id:'n5', label:'AI超市', hash:'#ai-mall', order:5, active:true },
     { id:'n6', label:'成功案例', hash:'#cases', order:6, active:true },
     { id:'n7', label:'政策资讯', hash:'#policy', order:7, active:true },
-    { id:'n8', label:'合作入驻', hash:'#cooperation', order:8, active:true },
+    { id:'n8', label:'社区活动', hash:'#community', order:8, active:true },
     { id:'n9', label:'关于我们', hash:'#about', order:9, active:true }
   ]
 };
@@ -2525,28 +3102,208 @@ function initStore() {
   });
 }
 
+// ============ User Session / Login State ============
+function getUserSession() {
+  return getStore('user_session') || DEFAULTS.user_session;
+}
+
+function setUserSession(sess) {
+  setStore('user_session', sess);
+  updateLoginStatus();
+}
+
+function checkLogin() {
+  var sess = getUserSession();
+  return sess && sess.isLoggedIn;
+}
+
+function updateLoginStatus() {
+  var btn = document.getElementById('logoutBtn');
+  if (!btn) return;
+  if (checkLogin()) {
+    btn.classList.remove('hidden');
+  } else {
+    btn.classList.add('hidden');
+  }
+}
+
+function logoutUser() {
+  setUserSession(DEFAULTS.user_session);
+  showToast('已退出登录');
+}
+
+function requireLogin(onSuccess, productName) {
+  if (checkLogin()) {
+    if (onSuccess) onSuccess();
+    return true;
+  }
+  openLoginChoice(onSuccess, productName);
+  return false;
+}
+
+function openLoginChoice(onSuccess, productName) {
+  _loginChoiceCallback = onSuccess;
+  _loginChoiceProduct = productName || '';
+  var overlay = document.getElementById('loginChoiceOverlay');
+  if (!overlay) {
+    // Create the modal if it doesn't exist
+    var modalHtml = '<div class="ent-modal-overlay hidden" id="loginChoiceOverlay">' +
+      '<div class="ent-modal" style="width:440px;">' +
+        '<div class="ent-modal-header">' +
+          '<h3>🔐 选择登录方式</h3>' +
+          '<button class="ent-modal-close" onclick="closeLoginChoice()">&times;</button>' +
+        '</div>' +
+        '<div class="ent-modal-body">' +
+          '<p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">登录后即可试用企业服务与AI产品，一次登录，全站通用</p>' +
+          '<div class="login-choice-grid">' +
+            '<div class="login-choice-card" onclick="choosePClogin()">' +
+              '<div class="login-choice-icon">💻</div>' +
+              '<div class="login-choice-title">PC 端登录</div>' +
+              '<div class="login-choice-desc">企业名称验证 + 注册/登录</div>' +
+            '</div>' +
+            '<div class="login-choice-card" onclick="chooseMPlogin()">' +
+              '<div class="login-choice-icon">📱</div>' +
+              '<div class="login-choice-title">小程序登录</div>' +
+              '<div class="login-choice-desc">微信扫码，快捷登录</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+    var div = document.createElement('div');
+    div.innerHTML = modalHtml;
+    document.body.appendChild(div.firstChild);
+    overlay = document.getElementById('loginChoiceOverlay');
+    overlay.addEventListener('click', function(e) { if (e.target === this) closeLoginChoice(); });
+  }
+  overlay.classList.remove('hidden');
+}
+
+function closeLoginChoice() {
+  var overlay = document.getElementById('loginChoiceOverlay');
+  if (overlay) overlay.classList.add('hidden');
+}
+
+var _loginChoiceCallback = null;
+var _loginChoiceProduct = '';
+
+function choosePClogin() {
+  closeLoginChoice();
+  openEntModal(_loginChoiceProduct, 'rongyisuan');
+}
+
+function chooseMPlogin() {
+  closeLoginChoice();
+  // Show mini-program QR modal
+  var overlay = document.getElementById('mpLoginOverlay');
+  if (!overlay) {
+    var modalHtml = '<div class="ent-modal-overlay hidden" id="mpLoginOverlay">' +
+      '<div class="ent-modal" style="width:360px;">' +
+        '<div class="ent-modal-header">' +
+          '<h3>📱 小程序登录</h3>' +
+          '<button class="ent-modal-close" onclick="closeMpLogin()">&times;</button>' +
+        '</div>' +
+        '<div class="ent-modal-body">' +
+          '<div class="mp-qr-box">' +
+            '<div class="ent-qr-placeholder" style="width:180px;height:180px;">' +
+              '<span>小程序登录二维码<br>（占位）</span>' +
+            '</div>' +
+            '<p style="font-size:13px;color:var(--text-secondary);">请使用微信扫描上方二维码<br>登录后自动返回</p>' +
+          '</div>' +
+          '<div style="text-align:center;margin-top:12px;">' +
+            '<button class="btn-outline btn-sm" onclick="simulateMpLogin()">模拟扫码成功</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+    var div = document.createElement('div');
+    div.innerHTML = modalHtml;
+    document.body.appendChild(div.firstChild);
+    overlay = document.getElementById('mpLoginOverlay');
+    overlay.addEventListener('click', function(e) { if (e.target === this) closeMpLogin(); });
+  }
+  overlay.classList.remove('hidden');
+}
+
+function closeMpLogin() {
+  var overlay = document.getElementById('mpLoginOverlay');
+  if (overlay) overlay.classList.add('hidden');
+}
+
+function simulateMpLogin() {
+  closeMpLogin();
+  var sess = { isLoggedIn: true, companyName: '小程序用户企业', loginTime: new Date().toISOString(), loginType: 'mp' };
+  setUserSession(sess);
+  showToast('✅ 小程序登录成功');
+  if (_loginChoiceCallback) _loginChoiceCallback();
+}
+
+
 function genId() { return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,6); }
 
 function getPageLabel(page) {
-  const labels = { home:'首页', park:'OPC园区', solution:'解决方案', service:'企业服务', 'ai-mall':'AI超市', cases:'成功案例', policy:'政策资讯', cooperation:'合作入驻', about:'关于我们' };
+  const labels = { home:'首页', park:'OPC园区', solution:'解决方案', service:'企业服务', 'ai-mall':'AI超市', cases:'成功案例', policy:'政策资讯', community:'社区活动', about:'关于我们' };
   return labels[page] || '';
 }
 
 // ============ Mode Switching ============
 function enterAdminMode() {
   document.body.classList.add('admin-mode');
+  document.body.classList.remove('light-theme');
   document.getElementById('frontendLayout').style.display = 'none';
   document.getElementById('adminLayout').style.display = 'flex';
   switchAdminPanel('brand');
   window.location.hash = '#admin';
+  updateThemeIcon();
 }
 
 function exitAdminMode() {
   document.body.classList.remove('admin-mode');
+  applyTheme();
   document.getElementById('frontendLayout').style.display = 'block';
   document.getElementById('adminLayout').style.display = 'none';
   window.location.hash = '#home';
   renderPage();
+}
+
+// ============ Theme Toggle ============
+function getTheme() {
+  try { return localStorage.getItem('opc_theme') || 'dark'; } catch(e) { return 'dark'; }
+}
+function setTheme(theme) {
+  try { localStorage.setItem('opc_theme', theme); } catch(e) {}
+}
+function applyTheme() {
+  if (document.body.classList.contains('admin-mode')) return;
+  var theme = getTheme();
+  if (theme === 'light') {
+    document.body.classList.add('light-theme');
+  } else {
+    document.body.classList.remove('light-theme');
+  }
+  updateThemeIcon();
+}
+function toggleTheme() {
+  var isLight = document.body.classList.contains('light-theme');
+  if (isLight) {
+    document.body.classList.remove('light-theme');
+    setTheme('dark');
+  } else {
+    document.body.classList.add('light-theme');
+    setTheme('light');
+  }
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  var btn = document.getElementById('themeToggleBtn');
+  if (!btn) return;
+  if (document.body.classList.contains('admin-mode') || document.body.classList.contains('light-theme')) {
+    btn.textContent = '☀️';
+    btn.title = '切换到深色主题';
+  } else {
+    btn.textContent = '🌙';
+    btn.title = '切换到浅色主题';
+  }
 }
 
 // ============ Shared Toast ============
@@ -2585,7 +3342,7 @@ function renderPage() {
     case 'ai-mall': renderAIMall(); break;
     case 'cases': renderCases(); break;
     case 'policy': renderPolicy(); break;
-    case 'cooperation': renderCooperation(); break;
+    case 'community': renderCommunity(); break;
     case 'about': renderAbout(); break;
   }
   window.scrollTo(0,0);
@@ -2633,13 +3390,36 @@ function renderHome() {
   document.getElementById('logoSub').textContent = cfg.logoSub || '';
 }
 
+var _currentParkIdx = 0;
+
 function renderPark() {
   var content = getStore('page_content');
-  var park = content.park || DEFAULTS.page_content.park;
-  document.getElementById('parkTitle').textContent = park.parkName || park.title || 'OPC 园区';
-  document.getElementById('parkDesc').textContent = park.desc || '';
+  var parks = content.parks || DEFAULTS.page_content.parks || [];
+  if (!parks.length) parks = DEFAULTS.page_content.parks || [];
+  
+  var currentPark = parks[_currentParkIdx] || parks[0];
+  if (!currentPark) return;
+  
+  document.getElementById('parkTitle').textContent = 'OPC 园区';
+  document.getElementById('parkDesc').textContent = '遍布全国的AI创业孵化生态，选择您感兴趣的园区了解详情';
+  
+  var html = '';
+  
+  // Multi-park switcher
+  if (parks.length > 1) {
+    html += '<div class="park-switcher">';
+    for (var pIdx = 0; pIdx < parks.length; pIdx++) {
+      var p = parks[pIdx];
+      html += '<button class="park-switch-tab' + (pIdx === _currentParkIdx ? ' active' : '') + '" onclick="switchPark(' + pIdx + ')">' +
+        (p.parkIcon || '\u{1F3ED}') + ' ' + (p.parkName || '园区' + (pIdx + 1)) + '</button>';
+    }
+    html += '</div>';
+  }
+  
+  // Park profile
+  var park = currentPark;
   var features = park.features || [];
-  var html = '<div class="park-profile">' +
+  html += '<div class="park-profile">' +
     '<div class="park-profile-hero">' +
       '<div class="park-profile-icon">' + (park.parkIcon || '\u{1F3ED}') + '</div>' +
       '<div class="park-profile-info">' +
@@ -2661,9 +3441,14 @@ function renderPark() {
     '</div>';
   }
   html += '<div style="text-align:center;margin-top:48px;">' +
-    '<a href="#cooperation" class="btn-primary">申请入驻此园区</a>' +
+    '<a href="#community" class="btn-primary">查看社区活动</a>' +
   '</div></div>';
   document.getElementById('parkContent').innerHTML = html;
+}
+
+function switchPark(idx) {
+  _currentParkIdx = idx;
+  renderPark();
 }
 
 
@@ -2971,7 +3756,6 @@ function renderSolutionDetail(item, idx) {
       (kpis ? '<div class="solution-detail-section"><h4>关键指标</h4><div class="solution-kpi-row">' + kpis + '</div></div>' : '') +
       '<div class="solution-cta-row">' +
         '<span class="solution-cta-hint">面向「' + item.title + '」园区与企业的定制方案，包含工具包 + 培训 + 专家对接</span>' +
-        '<a href="#cooperation" class="btn-primary" style="background:' + accent + ';">咨询合作方案 →</a>' +
       '</div>' +
     '</div>';
 }
@@ -2982,20 +3766,50 @@ function renderService() {
   const service = content.service || DEFAULTS.page_content.service;
   document.getElementById('serviceTitle').textContent = service.title;
   document.getElementById('serviceDesc').textContent = service.desc;
+  var couponBanner = '<div class="service-coupon-banner">' +
+    '<div class="coupon-item"><div class="coupon-icon">🎁</div><div class="coupon-info"><div class="coupon-title">零申报免费领取</div><div class="coupon-desc">新用户首年零申报免费办理</div></div></div>' +
+    '<div class="coupon-item"><div class="coupon-icon">🔍</div><div class="coupon-info"><div class="coupon-title">税务体检</div><div class="coupon-desc">AI智能诊断企业税务风险</div></div></div>' +
+    '<div class="coupon-item"><div class="coupon-icon">🧧</div><div class="coupon-info"><div class="coupon-title">代账首月5折</div><div class="coupon-desc">代理记账服务首月限时优惠</div></div></div>' +
+  '</div>';
   document.getElementById('serviceGrid').innerHTML = (service.items || []).map(function(item) {
-    return '<div class="service-card" onclick="openEntModal(\'' + escAttr(item.title) + '\',\'rongyisuan\')">' +
-      '<div class="service-card-icon">' + item.icon + '</div>' +
-      '<div class="service-card-body">' +
-        '<h3>' + item.title + '</h3>' +
-        '<p>' + item.desc + '</p>' +
+    return '<div class="service-card service-card-clickable" onclick="toggleCardExpand(this)">' +
+      '<div class="service-card-brief">' +
+        '<div class="service-card-icon">' + item.icon + '</div>' +
+        '<div class="service-card-body">' +
+          '<h3>' + item.title + '</h3>' +
+          '<p>' + item.desc + '</p>' +
+        '</div>' +
       '</div>' +
-      '<div class="service-card-footer"><button class="btn-trial">立即办理</button></div>' +
+      '<div class="service-card-detail">' +
+        '<h4 style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text-primary);">📋 服务介绍</h4>' +
+        '<p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">' + item.desc + '</p>' +
+        couponBanner +
+        '<div class="service-detail-qr">' +
+          '<div class="ent-qr-placeholder" style="width:140px;height:140px;margin:0 auto 8px;"><span>小程序二维码<br>（占位）</span></div>' +
+          '<p style="font-size:12px;color:var(--text-muted);">微信扫码，快速办理「' + item.title + '」</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="service-card-hover-qr">' +
+        '<div class="ent-qr-placeholder" style="width:120px;height:120px;"><span>小程序二维码<br>（占位）</span></div>' +
+        '<p style="font-size:12px;color:var(--text-secondary);">微信扫码快速办理</p>' +
+      '</div>' +
     '</div>';
   }).join('');
 }
 
 
 
+
+function handleServiceClick(serviceName) {
+  if (checkLogin()) {
+    showToast('✅ 已登录，正在进入「' + serviceName + '」服务...');
+  } else {
+    requireLogin(function() {
+      showToast('✅ 登录成功，正在进入「' + serviceName + '」服务...');
+      renderService();
+    }, serviceName);
+  }
+}
 
 function renderAIMall() {
   const content = getStore('page_content');
@@ -3141,11 +3955,246 @@ function updateFooterContact() {
   if (qrOpcMp) qrOpcMp.innerHTML = (cfg.footerQrOpcMp || 'OPC公众号').replace(/\n/g, '<br>');
 }
 
-function renderCooperation() {
+
+// ============ Community Page ============
+function renderCommunity() {
   var content = getStore('page_content');
-  var coop = content.cooperation || DEFAULTS.page_content.cooperation;
-  document.getElementById('cooperationTitle').textContent = coop.title;
-  document.getElementById('cooperationDesc').textContent = coop.desc;
+  var comm = content.community || DEFAULTS.page_content.community || {};
+  document.getElementById('communityTitle').textContent = comm.title || '社区活动';
+  document.getElementById('communityDesc').textContent = comm.desc || '园区资源共享、活动报名、社区互动';
+  renderActivities();
+  renderCommunityPosts();
+  // Bind tab clicks
+  document.querySelectorAll('.community-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var t = this.dataset.tab;
+      document.querySelectorAll('.community-tab').forEach(function(x) { x.classList.remove('active'); });
+      document.querySelectorAll('.community-panel').forEach(function(x) { x.classList.remove('active'); });
+      this.classList.add('active');
+      document.getElementById(t + 'Panel').classList.add('active');
+    });
+  });
+}
+
+function renderActivities() {
+  var activities = getStore('activities').filter(function(a) { return a.active; }).sort(function(a,b) { return a.order - b.order; });
+  var grid = document.getElementById('activityGrid');
+  if (!grid) return;
+  if (!activities.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-muted);">暂无活动</div>';
+    return;
+  }
+  grid.innerHTML = activities.map(function(a) {
+    var d = new Date(a.date);
+    var statusClass = a.status === '报名中' ? 'open' : (a.status === '已满员' ? 'full' : 'end');
+    var countText = (a.signedUp || 0) + '/' + (a.maxPeople || '--');
+    return '<div class="activity-card" onclick="openActivityDetail(\'' + escAttr(a.id) + '\')">' +
+      (a.image ? '<div class="activity-card-img" style="background-image:url(\'' + escAttr(a.image) + '\')"><div class="activity-card-img-overlay"></div><span class="activity-card-status ' + statusClass + '" style="position:absolute;top:12px;right:12px;z-index:2;">' + a.status + '</span></div>' : '') +
+      '<div class="activity-card-body">' +
+        '<h4>' + a.title + '</h4>' +
+        '<div class="activity-card-meta">' +
+          '<span>📅 ' + (d.getMonth()+1) + '月' + d.getDate() + '日 ' + (a.time || '') + '</span>' +
+          '<span>📍 ' + (a.location || '') + '</span>' +
+        '</div>' +
+        '<p class="activity-card-desc">' + (a.summary || '') + '</p>' +
+        '<div class="activity-card-tags">' + (a.tags || []).map(function(t) { return '<span class="tag tag-primary">' + t + '</span>'; }).join('') + '</div>' +
+        '<div class="activity-card-footer">' +
+          '<span class="activity-card-count">已报名 <b>' + countText + '</b></span>' +
+          '<span style="font-size:12px;color:var(--primary);font-weight:600;">查看详情 →</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderCommunityPosts() {
+  var posts = getStore('community_posts').filter(function(p) { return p.active; }).sort(function(a,b) { return a.order - b.order; });
+  var container = document.getElementById('communityPosts');
+  if (!container) return;
+  if (!posts.length) {
+    container.innerHTML = '<div style="text-align:center;padding:48px;color:var(--text-muted);">暂无社区动态</div>';
+    return;
+  }
+  container.innerHTML = posts.map(function(p) {
+    var d = new Date(p.date);
+    return '<div class="post-card">' +
+      '<div class="post-card-header">' +
+        '<div class="post-card-avatar">' + (p.authorAvatar || '👤') + '</div>' +
+        '<div>' +
+          '<div class="post-card-author">' + p.author + '</div>' +
+          '<div class="post-card-date">' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + '</div>' +
+        '</div>' +
+        '<span class="post-card-category">' + (p.category || '动态') + '</span>' +
+      '</div>' +
+      '<h4>' + p.title + '</h4>' +
+      '<p>' + p.content + '</p>' +
+      '<div class="post-card-actions">' +
+        '<span class="post-card-action" onclick="likePost(\'' + p.id + '\')">👍 ' + (p.likes || 0) + '</span>' +
+        '<span class="post-card-action">💬 ' + (p.comments || 0) + '</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+var _currentActivityId = '';
+
+function openActivityDetail(id) {
+  var activities = getStore('activities').filter(function(a) { return a.active; });
+  var a = activities.find(function(x) { return x.id === id; });
+  if (!a) return;
+  _currentActivityId = id;
+  var d = new Date(a.date);
+  document.getElementById('activityDetailHero').style.backgroundImage = a.image ? 'url(' + a.image + ')' : '';
+  document.getElementById('activityDetailTag').textContent = a.status || '活动';
+  document.getElementById('activityDetailDate').textContent = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日 ' + (a.time || '');
+  document.getElementById('activityDetailTitle').textContent = a.title;
+  document.getElementById('activityDetailInfo').innerHTML = '<span>📍 ' + escHtml(a.location || '') + '</span> · <span>已报名 ' + (a.signedUp || 0) + '/' + (a.maxPeople || '--') + '</span>';
+  document.getElementById('activityDetailContent').innerHTML = escHtml(a.content || a.summary || '').replace(/\n/g, '<br>');
+  var btn = document.getElementById('activitySignupBtn');
+  if (a.status === '报名中') { btn.style.display = ''; btn.textContent = '立即报名'; btn.disabled = false; }
+  else if (a.status === '已满员') { btn.style.display = ''; btn.textContent = '已满员'; btn.disabled = true; btn.style.opacity = '0.5'; }
+  else { btn.style.display = 'none'; }
+  document.getElementById('activityDetailOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeActivityDetail(e) {
+  if (e && e.target !== document.getElementById('activityDetailOverlay')) return;
+  document.getElementById('activityDetailOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function openActivitySignup() {
+  var a = getStore('activities').find(function(x) { return x.id === _currentActivityId; });
+  if (!a) return;
+  if (a.status !== '报名中') { showToast('该活动暂不可报名'); return; }
+  document.getElementById('activitySignupTitle').textContent = '📝 报名 — ' + a.title;
+  document.getElementById('activitySignupStep1').classList.add('active');
+  document.getElementById('activitySignupStep2').classList.remove('active');
+  document.getElementById('signupName').value = '';
+  document.getElementById('signupPhone').value = '';
+  document.getElementById('signupCompany').value = '';
+  document.getElementById('signupMessage').value = '';
+  document.getElementById('activitySignupOverlay').classList.remove('hidden');
+}
+
+function closeActivitySignup() {
+  document.getElementById('activitySignupOverlay').classList.add('hidden');
+}
+
+function submitActivitySignup() {
+  var name = document.getElementById('signupName').value.trim();
+  var phone = document.getElementById('signupPhone').value.trim();
+  var company = document.getElementById('signupCompany').value.trim();
+  var message = document.getElementById('signupMessage').value.trim();
+  if (!name) { showToast('请输入姓名'); return; }
+  if (!phone) { showToast('请输入手机号'); return; }
+  if (!/^1[3-9]\d{9}$/.test(phone)) { showToast('请输入正确的手机号码'); return; }
+
+  var activities = getStore('activities');
+  var a = activities.find(function(x) { return x.id === _currentActivityId; });
+  var signup = {
+    id: genId(), activityId: _currentActivityId, activityName: a ? a.title : '',
+    name: name, phone: phone, company: company, message: message,
+    date: new Date().toISOString().slice(0,10)
+  };
+  var signups = getStore('signups') || [];
+  signups.push(signup);
+  setStore('signups', signups);
+  // Update activity signedUp count
+  if (a) { a.signedUp = (a.signedUp || 0) + 1; setStore('activities', activities); }
+
+  document.getElementById('activitySignupStep1').classList.remove('active');
+  document.getElementById('activitySignupStep2').classList.add('active');
+  document.getElementById('activitySignupResultMsg').innerHTML = '您已成功报名「' + escHtml(a ? a.title : '') + '」<br>我们会尽快与您联系确认';
+  renderActivities();
+}
+
+function shareActivity() {
+  var a = getStore('activities').find(function(x) { return x.id === _currentActivityId; });
+  if (!a) return;
+  var link = window.location.origin + window.location.pathname + '#community';
+  document.getElementById('shareLinkInput').value = link;
+  document.getElementById('shareModalOverlay').classList.remove('hidden');
+}
+
+function closeShareModal() {
+  document.getElementById('shareModalOverlay').classList.add('hidden');
+}
+
+function copyShareLink() {
+  var input = document.getElementById('shareLinkInput');
+  input.select();
+  input.setSelectionRange(0, 99999);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(input.value).then(function() { showToast('链接已复制'); });
+  } else {
+    document.execCommand('copy');
+    showToast('链接已复制');
+  }
+}
+
+// ============ Settle In Modal ============
+function openSettleInModal() {
+  document.getElementById('siCompanyName').value = '';
+  document.getElementById('siContactName').value = '';
+  document.getElementById('siContactPhone').value = '';
+  document.getElementById('siRegion').value = '';
+  document.getElementById('settleInOverlay').classList.remove('hidden');
+}
+
+function closeSettleInModal() {
+  document.getElementById('settleInOverlay').classList.add('hidden');
+}
+
+function submitSettleIn() {
+  var companyName = document.getElementById('siCompanyName').value.trim();
+  var contactName = document.getElementById('siContactName').value.trim();
+  var contactPhone = document.getElementById('siContactPhone').value.trim();
+  var region = document.getElementById('siRegion').value;
+
+  if (!companyName) { showToast('请输入企业名称'); return; }
+  if (!contactName) { showToast('请输入联系人'); return; }
+  if (!contactPhone) { showToast('请输入联系电话'); return; }
+  if (!/^1[3-9]\d{9}$/.test(contactPhone)) { showToast('请输入正确的手机号码'); return; }
+
+  var application = {
+    id: genId(),
+    companyName: companyName,
+    contactName: contactName,
+    contactPhone: contactPhone,
+    region: region,
+    status: '待审核',
+    date: new Date().toISOString().slice(0,10)
+  };
+
+  var apps = getStore('settle_applications') || [];
+  apps.push(application);
+  setStore('settle_applications', apps);
+
+  console.log('[API] Submitting settle-in application to 融易算 backend:', application);
+
+  setUserSession({ isLoggedIn: true, companyName: companyName, loginTime: new Date().toISOString(), loginType: 'settle' });
+
+  closeSettleInModal();
+  showToast('✅ 入驻申请已提交，欢迎体验AI能力中心');
+}
+
+function likePost(id) {
+  var posts = getStore('community_posts');
+  var p = posts.find(function(x) { return x.id === id; });
+  if (p) { p.likes = (p.likes || 0) + 1; setStore('community_posts', posts); renderCommunityPosts(); }
+}
+
+function sharePost(id) {
+  var p = getStore('community_posts').find(function(x) { return x.id === id; });
+  if (!p) return;
+  var link = window.location.origin + window.location.pathname + '#community';
+  if (navigator.share) {
+    navigator.share({ title: p.title, text: p.content, url: link });
+  } else {
+    if (navigator.clipboard) navigator.clipboard.writeText(link).then(function() { showToast('链接已复制'); });
+  }
 }
 
 function renderAbout() {
@@ -3208,15 +4257,29 @@ function buildProductFooter(p, providerLabel) {
   var flow = p.trialFlow || 'enterprise';
   var html = '';
   if (flow === 'register') {
-    html += '<button class="btn-trial" onclick="event.stopPropagation();showToast(\'即将跳转到海牛AI应用生成器（占位演示）\')">\u{1F680} 注册试用</button>';
+    html += '<button class="btn-trial" onclick="event.stopPropagation();showToast(\'即将跳转到海牛AI应用生成器（占位演示）\')">\u{1F680} 试用</button>';
   } else if (flow === 'enterprise') {
-    html += '<button class="btn-trial" onclick="event.stopPropagation();openEntModal(\'' + escAttr(p.name) + '\',\'rongyisuan\')">\u{1F680} 注册试用</button>';
+    html += '<button class="btn-trial" onclick="event.stopPropagation();handleProductTrial(\'' + escAttr(p.name) + '\',\'' + escAttr(p.provider) + '\')">\u{1F680} 试用</button>';
   } else if (flow === 'contact') {
     html += '<button class="btn-trial btn-trial-contact" onclick="event.stopPropagation();showToast(\'请添加海牛AI企业微信咨询算力服务\')">\u{1F4AC} 联系商务咨询</button>';
   } else {
     html += '<span style="font-size:12px;color:var(--text-muted);padding:8px 0;">\u{1F6AB} 暂不开放试用</span>';
   }
   return html;
+}
+
+function handleProductTrial(productName, provider) {
+  if (provider !== 'rongyisuan') {
+    openEntModal(productName, provider);
+    return;
+  }
+  if (checkLogin()) {
+    showToast('✅ 已登录，正在进入「' + productName + '」...');
+  } else {
+    requireLogin(function() {
+      showToast('✅ 登录成功，正在进入「' + productName + '」...');
+    }, productName);
+  }
 }
 
 function caseCard(c) {
@@ -3306,6 +4369,8 @@ function submitEntCheck() {
     }
     actionsHtml += '<button class="btn-outline" onclick="closeEntModal()" style="margin-left:8px;">稍后再说</button>';
     document.getElementById('entResultActions').innerHTML = actionsHtml;
+    // Auto-login session
+    setUserSession({ isLoggedIn: true, companyName: companyName, loginTime: new Date().toISOString(), loginType: 'pc' });
   } else {
     resultBox.className = 'ent-result-box unregistered';
     document.getElementById('entResultTitle').textContent = '未注册企业';
@@ -3346,7 +4411,8 @@ function submitRegistration() {
   if (password !== password2) { showToast('两次密码输入不一致'); return; }
   if (!agree) { showToast('请阅读并同意服务协议'); return; }
 
-  // Simulate registration success
+  // Simulate registration success + auto login
+  setUserSession({ isLoggedIn: true, companyName: companyName, loginTime: new Date().toISOString(), loginType: 'pc' });
   document.getElementById('entStep3').classList.remove('active');
   document.getElementById('entStep4').classList.add('active');
   document.getElementById('regResultMsg').innerHTML = '企业"' + escHtml(companyName) + '"注册成功！<br>您现在可以登录并使用' + entModalProduct + '等全部产品';
@@ -3357,7 +4423,9 @@ function submitRegistration() {
 
 function simulateLogin(companyName) {
   closeEntModal();
-  showToast('🔑 正在跳转到融易算登录页面...（模拟）企业：' + companyName);
+  setUserSession({ isLoggedIn: true, companyName: companyName, loginTime: new Date().toISOString(), loginType: 'pc' });
+  showToast('✅ 登录成功 — 企业：' + companyName);
+  if (_loginChoiceCallback) { _loginChoiceCallback(); _loginChoiceCallback = null; }
 }
 
 function simulateRegister(companyName) {
@@ -3369,7 +4437,7 @@ function simulateRegister(companyName) {
 function toggleCardExpand(card) {
   var isExpanded = card.classList.contains('expanded');
   // Collapse all expanded cards first
-  document.querySelectorAll('.card-clickable.expanded, .product-card-clickable.expanded').forEach(function(c) {
+  document.querySelectorAll('.card-clickable.expanded, .product-card-clickable.expanded, .service-card-clickable.expanded').forEach(function(c) {
     c.classList.remove('expanded');
   });
   // If wasn't expanded, expand it
@@ -3379,52 +4447,11 @@ function toggleCardExpand(card) {
   }
 }
 
-function openCoopModal(plan) {
-  var overlay = document.getElementById('coopModalOverlay');
-  if (!overlay) return;
-  document.getElementById('coopStep1').classList.add('active');
-  document.getElementById('coopStep2').classList.remove('active');
-  document.getElementById('coopCompany').value = '';
-  document.getElementById('coopName').value = '';
-  document.getElementById('coopPhone').value = '';
-  document.getElementById('coopDesc').value = '';
-  var sel = document.getElementById('coopPlan');
-  if (sel && plan) {
-    for (var i = 0; i < sel.options.length; i++) {
-      if (sel.options[i].text === plan) { sel.selectedIndex = i; break; }
-    }
-  }
-  overlay.classList.remove('hidden');
-}
-
-function closeCoopModal() {
-  var overlay = document.getElementById('coopModalOverlay');
-  if (overlay) overlay.classList.add('hidden');
-}
-
-function submitCoop() {
-  var companyName = document.getElementById('coopCompany').value.trim();
-  var contactName = document.getElementById('coopName').value.trim();
-  var contactPhone = document.getElementById('coopPhone').value.trim();
-  var planSel = document.getElementById('coopPlan');
-  var plan = planSel ? planSel.options[planSel.selectedIndex].text : '';
-  var desc = document.getElementById('coopDesc').value.trim();
-  if (!companyName) { showToast('⚠ 请输入企业/园区名称'); return; }
-  if (!contactName) { showToast('⚠ 请输入联系人'); return; }
-  if (!contactPhone) { showToast('⚠ 请输入联系电话'); return; }
-  showToast('✅ ' + companyName + ' 的合作咨询已提交');
-  document.getElementById('coopResultMsg').innerHTML =
-    '<b>' + companyName + '</b> 的「' + plan + '」合作咨询已收到<br>' +
-    '联系人：' + contactName + ' · 电话：' + contactPhone +
-    (desc ? '<br>需求：' + desc : '');
-  document.getElementById('coopStep1').classList.remove('active');
-  document.getElementById('coopStep2').classList.add('active');
-}
-
 // ============ Admin Panel Logic ============
 const adminPanelTitles = {
   brand:'品牌配置', nav:'导航管理',
-  products:'AI超市产品', cases:'成功案例', policies:'政策资讯', pages:'页面内容', contact:'联系方式', footer:'页脚配置'
+  products:'AI超市产品', cases:'成功案例', policies:'政策资讯', activities:'活动管理',
+  posts:'社区帖子', analytics:'数据分析', pages:'页面内容', contact:'联系方式', footer:'页脚配置'
 };
 
 function switchAdminPanel(panel) {
@@ -3445,6 +4472,9 @@ function renderAdminPanel(panel) {
     case 'products': renderAdminProductTable(); break;
     case 'cases': renderAdminCaseTable(); break;
     case 'policies': renderAdminPolicyTable(); break;
+    case 'activities': renderAdminActivityTable(); break;
+    case 'posts': renderAdminPostTable(); break;
+    case 'analytics': renderAdminAnalytics(); break;
     case 'pages': renderAdminPageContentEditor(); break;
     case 'contact': renderAdminContactForm(); break;
     case 'footer': renderAdminFooterForm(); break;
@@ -3762,11 +4792,11 @@ function deleteAdminPolicy(id) {
 function renderAdminPageContentEditor() {
   const content = getStore('page_content');
   const pages = [
-    { key:'park', label:'OPC园区介绍', hasParkProfile:true },
+    { key:'parks', label:'OPC园区介绍', isParks:true },
     { key:'solution', label:'园区解决方案', hasIndustry:true },
     { key:'service', label:'企业服务' },
     { key:'about', label:'关于我们', hasBody:true },
-    { key:'cooperation', label:'合作入驻' },
+    
     { key:'ai-mall', label:'AI超市页面' },
     { key:'cases', label:'成功案例页面' },
     { key:'policy', label:'政策资讯页面' }
@@ -3778,14 +4808,36 @@ function renderAdminPageContentEditor() {
       '<div class="form-grid" style="margin-bottom:12px;">' +
       '<div class="form-group"><label>页面标题</label><input class="form-input page-field" data-page="' + page.key + '" data-field="title" value="' + escAttr(data.title||'') + '"></div>' +
       '<div class="form-group"><label>页面描述</label><input class="form-input page-field" data-page="' + page.key + '" data-field="desc" value="' + escAttr(data.desc||'') + '"></div></div>';
-    if (page.hasParkProfile) {
-      html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">' +
-        '<div class="form-group"><label>园区名称</label><input class="form-input page-field" data-page="' + page.key + '" data-field="parkName" value="' + escAttr(data.parkName||'') + '" placeholder="如：杭州未来科技城OPC园区"></div>' +
-        '<div class="form-group"><label>园区图标 (emoji)</label><input class="form-input page-field" data-page="' + page.key + '" data-field="parkIcon" value="' + escAttr(data.parkIcon||'') + '" placeholder="如：🏢"></div>' +
-        '<div class="form-group"><label>所在地区</label><input class="form-input page-field" data-page="' + page.key + '" data-field="parkLocation" value="' + escAttr(data.parkLocation||'') + '" placeholder="如：浙江省杭州市余杭区"></div>' +
-        '<div class="form-group"><label>面积</label><input class="form-input page-field" data-page="' + page.key + '" data-field="parkArea" value="' + escAttr(data.parkArea||'') + '" placeholder="如：12万m²"></div>' +
-        '<div class="form-group"><label>入驻企业数</label><input class="form-input page-field" data-page="' + page.key + '" data-field="parkEnterprises" value="' + escAttr(data.parkEnterprises||'') + '" placeholder="如：200+"></div>' +
-      '</div>';
+    if (page.isParks) {
+      var parks = data || [];
+      if (!parks.length) parks = [{ parkName:'', parkLocation:'', parkArea:'', parkEnterprises:'', parkIcon:'🏢', title:'OPC 园区', desc:'', features:[] }];
+      parks.forEach(function(park, pIdx) {
+        html += '<div style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--r-md);padding:12px;margin-bottom:10px;">' +
+          '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">' +
+            '<strong style="font-size:13px;">园区 ' + (pIdx+1) + '</strong>' +
+            (parks.length > 1 ? '<button class="btn btn-danger btn-xs" type="button" onclick="deleteAdminPark(' + pIdx + ')">删除</button>' : '') +
+          '</div>' +
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">' +
+            '<div class="form-group"><label>园区名称</label><input class="form-input park-field" data-pidx="' + pIdx + '" data-field="parkName" value="' + escAttr(park.parkName||'') + '" placeholder="如：杭州未来科技城OPC园区"></div>' +
+            '<div class="form-group"><label>园区图标 (emoji)</label><input class="form-input park-field" data-pidx="' + pIdx + '" data-field="parkIcon" value="' + escAttr(park.parkIcon||'') + '" placeholder="如：🏢"></div>' +
+            '<div class="form-group"><label>所在地区</label><input class="form-input park-field" data-pidx="' + pIdx + '" data-field="parkLocation" value="' + escAttr(park.parkLocation||'') + '" placeholder="如：浙江省杭州市余杭区"></div>' +
+            '<div class="form-group"><label>面积</label><input class="form-input park-field" data-pidx="' + pIdx + '" data-field="parkArea" value="' + escAttr(park.parkArea||'') + '" placeholder="如：12万m²"></div>' +
+            '<div class="form-group"><label>入驻企业数</label><input class="form-input park-field" data-pidx="' + pIdx + '" data-field="parkEnterprises" value="' + escAttr(park.parkEnterprises||'') + '" placeholder="如：200+"></div>' +
+            '<div class="form-group"><label>园区描述</label><input class="form-input park-field" data-pidx="' + pIdx + '" data-field="desc" value="' + escAttr(park.desc||'') + '" placeholder="园区简介"></div>' +
+          '</div>';
+        var features = park.features || [];
+        features.forEach(function(f, fIdx) {
+          html += '<div class="feature-row" style="margin-bottom:6px;">' +
+            '<input class="form-input park-feature-field" data-pidx="' + pIdx + '" data-fidx="' + fIdx + '" data-field="icon" value="' + escAttr(f.icon||'') + '" placeholder="图标">' +
+            '<input class="form-input park-feature-field" data-pidx="' + pIdx + '" data-fidx="' + fIdx + '" data-field="title" value="' + escAttr(f.title||'') + '" placeholder="标题">' +
+            '<input class="form-input park-feature-field" data-pidx="' + pIdx + '" data-fidx="' + fIdx + '" data-field="desc" value="' + escAttr(f.desc||'') + '" placeholder="描述">' +
+            '<button class="btn btn-danger btn-xs" type="button" onclick="deleteAdminParkFeature(' + pIdx + ',' + fIdx + ')">×</button>' +
+          '</div>';
+        });
+        html += '<button class="btn btn-outline btn-xs" type="button" style="margin-top:4px;margin-bottom:8px;" onclick="addAdminParkFeature(' + pIdx + ')">+ 添加园区模块</button>' +
+          '</div>';
+      });
+      html += '<button class="btn btn-outline btn-xs" type="button" style="margin-top:6px;" onclick="addAdminPark()">+ 添加园区</button>';
     }
     if (page.hasBody) {
       html += '<div class="form-group full" style="margin-bottom:8px;">' +
@@ -3863,6 +4915,54 @@ function deleteAdminIndustry(idx) {
   adminToast('行业已删除');
 }
 
+function addAdminPark() {
+  var content = getStore('page_content');
+  var parks = content.parks || [];
+  parks.push({ parkName:'新园区', parkLocation:'', parkArea:'', parkEnterprises:'', parkIcon:'🏢', title:'OPC 园区', desc:'', features:[] });
+  content.parks = parks;
+  setStore('page_content', content);
+  renderAdminPageContentEditor();
+  renderPark();
+  adminToast('园区已添加');
+}
+
+function deleteAdminPark(idx) {
+  if (!confirm('确定删除此园区？')) return;
+  var content = getStore('page_content');
+  var parks = content.parks || [];
+  parks.splice(idx, 1);
+  content.parks = parks;
+  setStore('page_content', content);
+  renderAdminPageContentEditor();
+  renderPark();
+  adminToast('园区已删除');
+}
+
+function addAdminParkFeature(pIdx) {
+  var content = getStore('page_content');
+  var parks = content.parks || [];
+  if (!parks[pIdx]) return;
+  parks[pIdx].features = parks[pIdx].features || [];
+  parks[pIdx].features.push({ icon:'📦', title:'新模块', desc:'模块描述' });
+  content.parks = parks;
+  setStore('page_content', content);
+  renderAdminPageContentEditor();
+  adminToast('模块已添加');
+}
+
+function deleteAdminParkFeature(pIdx, fIdx) {
+  var content = getStore('page_content');
+  var parks = content.parks || [];
+  if (!parks[pIdx] || !parks[pIdx].features) return;
+  parks[pIdx].features.splice(fIdx, 1);
+  content.parks = parks;
+  setStore('page_content', content);
+  renderAdminPageContentEditor();
+  adminToast('模块已删除');
+}
+
+
+
 function resetAdminAboutBody() {
   if (!confirm('将「关于我们」正文恢复为默认图文版式？当前内容会被覆盖。')) return;
   const content = getStore('page_content');
@@ -3906,6 +5006,7 @@ function saveAdminPageContent() {
   document.querySelectorAll('.page-field').forEach(input => {
     const page = input.dataset.page;
     const field = input.dataset.field;
+    if (page === 'parks') return; // skip parks array — handled separately
     if (!content[page]) content[page] = {};
     content[page][field] = input.value;
   });
@@ -3943,13 +5044,31 @@ function saveAdminPageContent() {
   sol.industrySolutions = inds;
   content.solution = sol;
 
+  // Parks array save
+  var parks = content.parks || [];
+  document.querySelectorAll('.park-field').forEach(function(input) {
+    var pIdx = parseInt(input.dataset.pidx);
+    var field = input.dataset.field;
+    if (!parks[pIdx]) parks[pIdx] = {};
+    parks[pIdx][field] = input.value;
+  });
+  document.querySelectorAll('.park-feature-field').forEach(function(input) {
+    var pIdx = parseInt(input.dataset.pidx);
+    var fIdx = parseInt(input.dataset.fidx);
+    var field = input.dataset.field;
+    if (!parks[pIdx]) parks[pIdx] = {};
+    if (!parks[pIdx].features) parks[pIdx].features = [];
+    if (!parks[pIdx].features[fIdx]) parks[pIdx].features[fIdx] = {};
+    parks[pIdx].features[fIdx][field] = input.value;
+  });
+  content.parks = parks;
+
   setStore('page_content', content);
   // sync frontend
   renderPark();
   renderSolution();
   renderService();
   renderAbout();
-  renderCooperation();
   renderAIMall();
   renderCases();
   renderPolicy();
@@ -4018,6 +5137,178 @@ function saveAdminFooter() {
   adminToast('页脚配置已保存，前台已更新');
 }
 
+
+// ============ Admin Activities ============
+function renderAdminActivityTable() {
+  var items = getStore('activities').sort(function(a,b) { return a.order - b.order; });
+  var tbody = document.getElementById('adminActivitiesTableBody');
+  if (!items.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>暂无活动</p></div></td></tr>'; return; }
+  tbody.innerHTML = items.map(function(a) {
+    return '<tr><td>' + a.order + '</td><td>' + a.title + '</td><td>' + a.date + ' ' + (a.time || '') + '</td>' +
+      '<td><span class="status-badge ' + (a.active?'status-active':'status-inactive') + '">' + (a.active?'发布':'隐藏') + '</span></td>' +
+      '<td>' + (a.signedUp || 0) + '/' + (a.maxPeople || '--') + '</td>' +
+      '<td><button class="btn btn-outline btn-xs" onclick="openAdminActivityModal(\'' + a.id + '\')">编辑</button> ' +
+      '<button class="btn btn-danger btn-xs" onclick="deleteAdminActivity(\'' + a.id + '\')">删除</button></td></tr>';
+  }).join('');
+}
+
+function openAdminActivityModal(id) {
+  var items = getStore('activities');
+  var item = id ? items.find(function(a) { return a.id === id; }) : null;
+  var isNew = !item;
+  var data = item || { id:genId(), title:'', summary:'', content:'', image:'', date:new Date().toISOString().slice(0,10), time:'', location:'', tags:[], status:'报名中', maxPeople:50, signedUp:0, order:items.length+1, active:true };
+  var tagsStr = (data.tags || []).join(',');
+  showAdminModal(
+    isNew ? '新增活动' : '编辑活动',
+    '<div class="form-grid">' +
+      '<div class="form-group full"><label>活动标题</label><input class="form-input" id="af_title" value="' + escAttr(data.title) + '" placeholder="活动标题"></div>' +
+      '<div class="form-group full"><label>摘要</label><textarea class="form-input" id="af_summary" rows="2">' + escHtml(data.summary) + '</textarea></div>' +
+      '<div class="form-group full"><label>详情内容</label><textarea class="form-input" id="af_content" rows="4">' + escHtml(data.content) + '</textarea></div>' +
+      '<div class="form-group"><label>日期</label><input class="form-input" type="date" id="af_date" value="' + data.date + '" ></div>' +
+      '<div class="form-group"><label>时间</label><input class="form-input" id="af_time" value="' + escAttr(data.time || '') + '" placeholder="如 14:00-17:00"></div>' +
+      '<div class="form-group full"><label>地点</label><input class="form-input" id="af_location" value="' + escAttr(data.location || '') + '" placeholder="活动地点"></div>' +
+      '<div class="form-group"><label>图片URL</label><input class="form-input" id="af_image" value="' + escAttr(data.image || '') + '" placeholder="https://..."></div>' +
+      '<div class="form-group"><label>标签（逗号分隔）</label><input class="form-input" id="af_tags" value="' + escAttr(tagsStr) + '" placeholder="财税,沙龙"></div>' +
+      '<div class="form-group"><label>状态</label><select class="form-input" id="af_status"><option value="报名中" ' + (data.status==='报名中'?'selected':'') + '>报名中</option><option value="已满员" ' + (data.status==='已满员'?'selected':'') + '>已满员</option><option value="已结束" ' + (data.status==='已结束'?'selected':'') + '>已结束</option></select></div>' +
+      '<div class="form-group"><label>人数上限</label><input class="form-input" type="number" id="af_maxPeople" value="' + (data.maxPeople || 50) + '"></div>' +
+      '<div class="form-group"><label>排序</label><input class="form-input" type="number" id="af_order" value="' + data.order + '"></div>' +
+      '<div class="form-group"><label>发布状态</label><select class="form-input" id="af_active"><option value="1" ' + (data.active?'selected':'') + '>发布</option><option value="0" ' + (!data.active?'selected':'') + '>隐藏</option></select></div>' +
+    '</div>',
+    function() {
+      var updated = {
+        id:data.id, title:document.getElementById('af_title').value,
+        summary:document.getElementById('af_summary').value,
+        content:document.getElementById('af_content').value,
+        date:document.getElementById('af_date').value,
+        time:document.getElementById('af_time').value,
+        location:document.getElementById('af_location').value,
+        image:document.getElementById('af_image').value,
+        tags:document.getElementById('af_tags').value.split(',').map(function(t){return t.trim();}).filter(Boolean),
+        status:document.getElementById('af_status').value,
+        maxPeople:parseInt(document.getElementById('af_maxPeople').value)||50,
+        signedUp:data.signedUp || 0,
+        order:parseInt(document.getElementById('af_order').value)||1,
+        active:document.getElementById('af_active').value==='1'
+      };
+      var list = getStore('activities');
+      var idx = list.findIndex(function(x){return x.id===data.id;});
+      if (idx >= 0) list[idx] = updated; else list.push(updated);
+      setStore('activities', list);
+      closeAdminModal();
+      renderAdminActivityTable();
+      renderCommunity();
+      adminToast('活动已保存，前台已更新');
+    }
+  );
+}
+
+function deleteAdminActivity(id) {
+  if (!confirm('确定删除此活动？')) return;
+  setStore('activities', getStore('activities').filter(function(a){return a.id !== id;}));
+  renderAdminActivityTable();
+  renderCommunity();
+  adminToast('活动已删除');
+}
+
+// ============ Admin Posts ============
+function renderAdminPostTable() {
+  var items = getStore('community_posts').sort(function(a,b){return a.order-b.order;});
+  var tbody = document.getElementById('adminPostsTableBody');
+  if (!items.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>暂无帖子</p></div></td></tr>'; return; }
+  tbody.innerHTML = items.map(function(p) {
+    return '<tr><td>' + p.order + '</td><td>' + p.title + '</td><td>' + p.author + '</td><td>' + p.category + '</td>' +
+      '<td><span class="status-badge ' + (p.active?'status-active':'status-inactive') + '">' + (p.active?'发布':'隐藏') + '</span></td>' +
+      '<td><button class="btn btn-outline btn-xs" onclick="openAdminPostModal(\'' + p.id + '\')">编辑</button> ' +
+      '<button class="btn btn-danger btn-xs" onclick="deleteAdminPost(\'' + p.id + '\')">删除</button></td></tr>';
+  }).join('');
+}
+
+function openAdminPostModal(id) {
+  var items = getStore('community_posts');
+  var item = id ? items.find(function(p){return p.id===id;}) : null;
+  var isNew = !item;
+  var data = item || { id:genId(), title:'', content:'', author:'园区运营', authorAvatar:'👤', date:new Date().toISOString().slice(0,10), category:'公告', likes:0, comments:0, order:items.length+1, active:true };
+  showAdminModal(
+    isNew ? '新增帖子' : '编辑帖子',
+    '<div class="form-grid">' +
+      '<div class="form-group full"><label>标题</label><input class="form-input" id="pf_title" value="' + escAttr(data.title) + '"></div>' +
+      '<div class="form-group full"><label>内容</label><textarea class="form-input" id="pf_content" rows="4">' + escHtml(data.content) + '</textarea></div>' +
+      '<div class="form-group"><label>作者</label><input class="form-input" id="pf_author" value="' + escAttr(data.author) + '"></div>' +
+      '<div class="form-group"><label>分类</label><select class="form-input" id="pf_category"><option value="公告" ' + (data.category==='公告'?'selected':'') + '>公告</option><option value="互助" ' + (data.category==='互助'?'selected':'') + '>互助</option><option value="招聘" ' + (data.category==='招聘'?'selected':'') + '>招聘</option><option value="动态" ' + (data.category==='动态'?'selected':'') + '>动态</option></select></div>' +
+      '<div class="form-group"><label>排序</label><input class="form-input" type="number" id="pf_order" value="' + data.order + '"></div>' +
+      '<div class="form-group"><label>状态</label><select class="form-input" id="pf_active"><option value="1" ' + (data.active?'selected':'') + '>发布</option><option value="0" ' + (!data.active?'selected':'') + '>隐藏</option></select></div>' +
+    '</div>',
+    function() {
+      var updated = {
+        id:data.id, title:document.getElementById('pf_title').value,
+        content:document.getElementById('pf_content').value,
+        author:document.getElementById('pf_author').value,
+        authorAvatar:data.authorAvatar, date:data.date,
+        category:document.getElementById('pf_category').value,
+        likes:data.likes, comments:data.comments,
+        order:parseInt(document.getElementById('pf_order').value)||1,
+        active:document.getElementById('pf_active').value==='1'
+      };
+      var list = getStore('community_posts');
+      var idx = list.findIndex(function(x){return x.id===data.id;});
+      if (idx >= 0) list[idx] = updated; else list.push(updated);
+      setStore('community_posts', list);
+      closeAdminModal();
+      renderAdminPostTable();
+      renderCommunity();
+      adminToast('帖子已保存，前台已更新');
+    }
+  );
+}
+
+function deleteAdminPost(id) {
+  if (!confirm('确定删除此帖子？')) return;
+  setStore('community_posts', getStore('community_posts').filter(function(p){return p.id !== id;}));
+  renderAdminPostTable();
+  renderCommunity();
+  adminToast('帖子已删除');
+}
+
+// ============ Admin Analytics ============
+function renderAdminAnalytics() {
+  var signups = getStore('signups') || [];
+  var activities = getStore('activities');
+  var html = '';
+  if (!signups.length) {
+    html = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>暂无报名数据</p></div>';
+  } else {
+    // Summary stats
+    var totalSignups = signups.length;
+    var byActivity = {};
+    signups.forEach(function(s) {
+      if (!byActivity[s.activityName]) byActivity[s.activityName] = [];
+      byActivity[s.activityName].push(s);
+    });
+    html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">' +
+      '<div style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;text-align:center;">' +
+        '<div style="font-size:28px;font-weight:700;color:var(--primary);">' + totalSignups + '</div>' +
+        '<div style="font-size:12px;color:var(--text-muted);">总报名人数</div>' +
+      '</div>' +
+      '<div style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;text-align:center;">' +
+        '<div style="font-size:28px;font-weight:700;color:var(--success);">' + Object.keys(byActivity).length + '</div>' +
+        '<div style="font-size:12px;color:var(--text-muted);">活动数</div>' +
+      '</div>' +
+      '<div style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;text-align:center;">' +
+        '<div style="font-size:28px;font-weight:700;color:var(--accent);">' + signups.filter(function(s){return s.date === new Date().toISOString().slice(0,10);}).length + '</div>' +
+        '<div style="font-size:12px;color:var(--text-muted);">今日报名</div>' +
+      '</div>' +
+    '</div>';
+    // Activity breakdown
+    html += '<div class="data-table-wrap"><div class="data-table-header"><h3>各活动报名明细</h3></div>' +
+      '<table class="data-table"><thead><tr><th>活动名称</th><th>姓名</th><th>手机号</th><th>企业</th><th>备注</th><th>报名日期</th></tr></thead><tbody>';
+    signups.forEach(function(s) {
+      html += '<tr><td>' + escHtml(s.activityName) + '</td><td>' + escHtml(s.name) + '</td><td>' + escHtml(s.phone) + '</td><td>' + escHtml(s.company || '-') + '</td><td>' + escHtml(s.message || '-') + '</td><td>' + s.date + '</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+  document.getElementById('adminAnalyticsContent').innerHTML = html;
+}
+
 // ============ Admin Modal ============
 function showAdminModal(title, bodyHtml, onSave) {
   document.getElementById('adminModalContent').innerHTML =
@@ -4026,7 +5317,7 @@ function showAdminModal(title, bodyHtml, onSave) {
     '<div class="modal-footer"><button class="btn btn-outline" onclick="closeAdminModal()">取消</button>' +
     '<button class="btn btn-primary" id="adminModalSaveBtn">保存</button></div>';
   document.getElementById('adminModalOverlay').classList.remove('hidden');
-  document.getElementById('adminModalSaveBtn').addEventListener('click', onSave);
+  document.getElementById('adminModalSaveBtn').onclick = onSave;
 }
 
 function closeAdminModal() {
@@ -4035,7 +5326,11 @@ function closeAdminModal() {
 
 // ============ Admin Toast ============
 function adminToast(msg) {
-  showToast(msg);
+  var toast = document.getElementById('adminToast');
+  if (!toast) { showToast(msg); return; }
+  toast.innerHTML = msg;
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 2500);
 }
 
 // ============ Helpers ============
@@ -4076,10 +5371,15 @@ function adjustColor(hex, amount) {
 
 function init() {
   initStore();
+  applyTheme();
   var initCfg = getStore('site_config');
   if (initCfg && initCfg.primaryColor) applyBrandColor(initCfg.primaryColor);
   renderNav();
-  renderPage();
+  if (getCurrentPage() === 'admin') {
+    enterAdminMode();
+  } else {
+    renderPage();
+  }
 
   window.addEventListener('hashchange', function() {
     const hash = window.location.hash.replace('#','');
@@ -4128,7 +5428,14 @@ function init() {
     if (e.target === this) closeAdminModal();
   });
 
+  // Settle-in modal overlay click to close
+  document.getElementById('settleInOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeSettleInModal();
+  });
+
   // Save buttons are handled via onclick attributes in HTML
+
+  updateLoginStatus();
 }
 
 document.addEventListener('DOMContentLoaded', init);
